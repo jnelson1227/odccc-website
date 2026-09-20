@@ -155,20 +155,6 @@ export default async function VisitPage() {
           <CardGrid cards={WHAT_TO_EXPECT} />
         </section>
 
-        <section className="flex flex-col gap-7 px-6 pb-14 md:px-16">
-          <SectionHead eyebrow="Year-round" title="The sculpture trail" />
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
-            <p className="m-0 text-[20px] leading-[1.55] text-body">
-              <strong className="text-cream">The championship never really leaves.</strong> Many
-              finished sculptures are donated to the City of Reedsport and installed around town —
-              turning Reedsport into a living, open-air gallery you can walk any day of the year.
-            </p>
-            <div className="flex h-[220px] items-center justify-center border-2 border-dashed border-line px-4 text-center text-[13px] font-bold uppercase tracking-[1.5px] text-sub">
-              Sculpture trail map — coming soon
-            </div>
-          </div>
-        </section>
-
         <section className="flex flex-col gap-7 px-6 pb-20 md:px-16">
           <SectionHead eyebrow="Make a weekend of it" title="Around Reedsport" />
 

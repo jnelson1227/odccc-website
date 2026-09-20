@@ -17,7 +17,7 @@ The Home nav row has a text lockup on the left: "Reedsport · The Chainsaw Carvi
 | `/carvers` | Carvers.dc.html | Pro and Semi-Pro grids |
 | `/carvers/[slug]` | (no mockup; build in the same style) | Photo(s), bio, hometown, studio, website, honors |
 | `/schedule` | Schedule.dc.html | 4 day cards + admission |
-| `/visit` | Visit.dc.html | Getting here, what to expect, sculpture trail, around Reedsport |
+| `/visit` | Visit.dc.html | Getting here, what to expect, around Reedsport |
 | `/sponsors` | Sponsors.dc.html | Thank-you page, in the main nav |
 | `/sponsorship` | Sponsorship.dc.html | Levels and pricing. Not in the main nav; linked from /sponsors, the Home hero button and the footer. Also add `/sponsor` as a redirect to it (short URL for printed material). |
 | `/our-story` | History.dc.html | Timeline + past winners |
@@ -37,7 +37,9 @@ Carver CTA box: "Are you a carver?" → the carver application link (setting).
 Four day cards, Thursday–Sunday, with computed dates. Rows are from the `schedule_items` table (day_type `weekday` for Thu–Sat, `sunday`); highlighted rows get the gold tint. Admission cards show *daily price* and *4-day pass price*; the third card has location, gate time and the "Plan your visit" button.
 
 ## Visit
-As in the mockup. Directions link: Google Maps for "Rainbow Plaza, Reedsport, OR 97467". Parking copy comes from a setting (placeholder until provided). The "Where to stay & eat" link goes to the Chamber's Visit Reedsport app (URL in settings). The sculpture-trail map is a placeholder block for v1.
+As in the mockup. Directions link: Google Maps for "Rainbow Plaza, Reedsport, OR 97467". Parking copy comes from a setting (placeholder until provided). The Chamber's visitor guide at visitreedsport.com gets a feature panel under "Around Reedsport" (URL in settings).
+
+**Changed 2026-09-20:** the sculpture-trail section was removed — there is no official trail to map. "Sculptures around town" may come back later as its own thing.
 
 ## Sponsors (/sponsors)
 1. Presenting sponsor block: if one is set, show their logo and a thank-you; otherwise show the dashed "This could be your name" box linking to /sponsorship.
