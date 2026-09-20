@@ -7,6 +7,15 @@ import { createServerClient } from "@supabase/ssr";
  * the matcher keeps this off the hot path for ordinary visitors.
  */
 export default async function proxy(request: NextRequest) {
+  // Leave the sign-in callback alone. Calling getUser() here would refresh and
+  // rewrite the auth cookies before the route handler has had a chance to trade
+  // the one-time code for a session, and the exchange needs the verifier cookie
+  // exactly as the browser set it. Refreshing a session that doesn't exist yet
+  // is pointless anyway.
+  if (request.nextUrl.pathname === "/admin/auth/callback") {
+    return NextResponse.next({ request });
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(

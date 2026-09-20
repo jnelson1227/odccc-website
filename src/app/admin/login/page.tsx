@@ -35,18 +35,25 @@ export default async function LoginPage({
           </p>
         )}
 
-        {error === "expired" && (
+        {error && error !== "missing-code" && (
           <div
             role="alert"
             className="m-0 flex flex-col gap-2 rounded-md border border-admin-highlight-border bg-admin-highlight px-4 py-3 text-[14px] leading-[1.5]"
           >
             <strong>That sign-in link didn&apos;t work.</strong>
-            <span>
-              Links only work once, expire after an hour, and have to be opened in the same
-              browser you asked for them from. If your email opened it somewhere else, request a
-              new link below, then copy the link out of the email and paste it into this browser
-              instead of clicking it.
-            </span>
+            {error === "wrong-browser" ? (
+              <span>
+                The link has to be opened in the same browser you asked for it from. Request a new
+                one below, then <strong>copy the link out of the email and paste it here</strong>
+                {" "}rather than clicking it.
+              </span>
+            ) : (
+              <span>
+                Links work once and expire after an hour, and some email providers open them
+                automatically, which uses them up. Request a new one below and open it straight
+                away.
+              </span>
+            )}
           </div>
         )}
 
