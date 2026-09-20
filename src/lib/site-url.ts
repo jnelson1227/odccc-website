@@ -25,3 +25,18 @@ function resolve(): string {
 }
 
 export const SITE_URL = resolve();
+
+/**
+ * Whether search engines should index this deployment.
+ *
+ * Only the real domain should ever be indexed. A vercel.app alias serves the
+ * same pages with a canonical tag pointing at itself, so letting Google index
+ * one means the staging URL and oregonccc.com compete as separate sites for the
+ * same content — and the alias, being older in the index, can win. This site
+ * lives on search traffic, so that is worth preventing rather than repairing.
+ *
+ * Derived from the host instead of a separate flag, so cutover is still the one
+ * act of setting NEXT_PUBLIC_SITE_URL: indexing turns itself on at the same
+ * moment, with nothing to remember.
+ */
+export const IS_INDEXABLE = !/\.vercel\.app$/i.test(new URL(SITE_URL).hostname);

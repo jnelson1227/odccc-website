@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Big_Shoulders } from "next/font/google";
-import { SITE_URL } from "@/lib/site-url";
+import { SITE_URL, IS_INDEXABLE } from "@/lib/site-url";
 import "./globals.css";
 
 // Google retired "Big Shoulders Display" and folded it into the Big Shoulders
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
   twitter: { card: "summary_large_image" },
-  robots: { index: true, follow: true },
+  robots: { index: IS_INDEXABLE, follow: IS_INDEXABLE },
 };
 
 export const viewport: Viewport = {
