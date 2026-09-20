@@ -47,7 +47,9 @@ export default function CarverCard({
           </div>
         )}
 
-        {carver.honor_badge && (
+        {/* The badge belongs to the Carvers-page card; the homepage row uses the
+            gold card line instead, as in design-reference/Home.dc.html. */}
+        {!isHome && carver.honor_badge && (
           <span className="absolute left-0 top-0 bg-gold px-2 py-1 text-[11px] font-bold uppercase tracking-[1.5px] text-brown">
             {carver.honor_badge}
           </span>

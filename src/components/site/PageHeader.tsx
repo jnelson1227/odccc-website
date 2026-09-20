@@ -23,7 +23,7 @@ export default function PageHeader({
         fill
         priority
         sizes="100vw"
-        className="object-cover [filter:saturate(0.12)]"
+        className="object-cover"
       />
       <div className="absolute inset-0 bg-fir-900 opacity-[0.78]" />
       <div className="relative flex flex-col gap-4 px-6 pb-10 pt-16 md:px-16 md:pb-14">

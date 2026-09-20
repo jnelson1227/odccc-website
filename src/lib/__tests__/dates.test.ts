@@ -8,6 +8,7 @@ import {
   formatDayShort,
   formatRange,
   formatRangeLong,
+  numberToWords,
   ordinal,
   parseISODate,
   resolveEventDates,
@@ -176,5 +177,20 @@ describe("roundedCarverCount", () => {
   it("shows the exact count when there is nothing to round to", () => {
     expect(roundedCarverCount(0)).toBe("0");
     expect(roundedCarverCount(4)).toBe("4");
+  });
+});
+
+describe("numberToWords", () => {
+  it("spells out the counts a lineup sentence needs", () => {
+    expect(numberToWords(39)).toBe("thirty-nine");
+    expect(numberToWords(8)).toBe("eight");
+    expect(numberToWords(20)).toBe("twenty");
+    expect(numberToWords(31)).toBe("thirty-one");
+    expect(numberToWords(0)).toBe("zero");
+  });
+
+  it("falls back to digits outside its range", () => {
+    expect(numberToWords(100)).toBe("100");
+    expect(numberToWords(-1)).toBe("-1");
   });
 });

@@ -50,7 +50,7 @@ export default async function HomePage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover [filter:saturate(0.5)]"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-fir-900" style={{ opacity: wash }} />
         <div className="absolute inset-x-0 bottom-0 h-[220px] bg-linear-to-b from-transparent to-fir-900" />

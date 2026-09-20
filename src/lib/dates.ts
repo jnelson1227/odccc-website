@@ -135,3 +135,27 @@ export function roundedCarverCount(count: number): string {
   if (count < 5) return String(count);
   return `${Math.floor(count / 5) * 5}+`;
 }
+
+const ONES = [
+  "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+  "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen",
+  "nineteen",
+];
+const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+/**
+ * 39 → "thirty-nine". Used for the carver count in the Carvers page intro,
+ * which reads as a sentence. Falls back to digits above 99.
+ */
+export function numberToWords(n: number): string {
+  if (n < 0 || !Number.isInteger(n) || n > 99) return String(n);
+  if (n < 20) return ONES[n];
+  const tens = TENS[Math.floor(n / 10)];
+  const ones = n % 10;
+  return ones === 0 ? tens : `${tens}-${ONES[ones]}`;
+}
+
+/** "thirty-nine" → "Thirty-nine". */
+export function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
