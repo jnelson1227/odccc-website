@@ -18,25 +18,6 @@ const DIRECTIONS =
   "https://www.google.com/maps/dir/?api=1&destination=" +
   encodeURIComponent("Rainbow Plaza, Reedsport, OR 97467");
 
-const WHAT_TO_EXPECT = [
-  {
-    title: "Open booths",
-    body: "Every carver works in an open booth. Watch up close, ask questions, meet the artists.",
-  },
-  {
-    title: "Quick Carve",
-    body: "Daily at 10:30 a.m. — 90 minutes on the clock, a finished sculpture at the buzzer.",
-  },
-  {
-    title: "Live auctions",
-    body: "Take home a one-of-a-kind piece. Quick Carve sculptures sell at every evening auction.",
-  },
-  {
-    title: "Food & vendors",
-    body: "Local food, drinks and vendors on the plaza all four days.",
-  },
-];
-
 /** Where the Chamber's visitor guide lives, unless settings point somewhere else. */
 const VISIT_REEDSPORT = "https://visitreedsport.com";
 
@@ -148,11 +129,6 @@ export default async function VisitPage() {
           <div className="flex justify-center border border-line bg-fir-850 p-6 md:p-8">
             <OregonMap variant="large" className="h-auto w-full max-w-[460px]" />
           </div>
-        </section>
-
-        <section className="flex flex-col gap-7 px-6 pb-14 md:px-16">
-          <SectionHead eyebrow="At the championship" title="What to expect" />
-          <CardGrid cards={WHAT_TO_EXPECT} />
         </section>
 
         <section className="flex flex-col gap-7 px-6 pb-20 md:px-16">

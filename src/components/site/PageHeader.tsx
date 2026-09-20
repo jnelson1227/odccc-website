@@ -9,11 +9,18 @@ export default function PageHeader({
   eyebrow,
   title,
   intro,
+  desaturate = false,
 }: {
   image: string;
   eyebrow: string;
   title: string;
   intro: string;
+  /**
+   * The header photos in /images/site were desaturated before they were saved.
+   * A full-colour source needs the same treatment applied here to match —
+   * docs/02-design-system.md puts page headers at about 12% saturation.
+   */
+  desaturate?: boolean;
 }) {
   return (
     <header className="relative flex min-h-[260px] flex-col justify-end overflow-hidden md:h-[380px]">
@@ -23,7 +30,7 @@ export default function PageHeader({
         fill
         priority
         sizes="100vw"
-        className="object-cover"
+        className={`object-cover ${desaturate ? "[filter:saturate(0.12)]" : ""}`}
       />
       <div className="absolute inset-0 bg-fir-900 opacity-[0.78]" />
       <div className="relative flex flex-col gap-4 px-6 pb-10 pt-16 md:px-16 md:pb-14">
