@@ -1,13 +1,12 @@
 import { isoWithPacificOffset } from "@/lib/dates";
 import type { EventContext } from "@/lib/queries";
+import { SITE_URL } from "@/lib/site-url";
 
 /**
  * schema.org Event markup, on the homepage and the schedule page. Dates are
  * computed from the year like everywhere else; the venue never changes.
  */
 export default function EventJsonLd({ ctx }: { ctx: EventContext }) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://oregonccc.com";
-
   const data = {
     "@context": "https://schema.org",
     "@type": "Festival",
@@ -19,8 +18,8 @@ export default function EventJsonLd({ ctx }: { ctx: EventContext }) {
     endDate: isoWithPacificOffset(ctx.dates.end, "end"),
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    url: siteUrl,
-    image: `${siteUrl}/opengraph-image`,
+    url: SITE_URL,
+    image: `${SITE_URL}/opengraph-image`,
     location: {
       "@type": "Place",
       name: "Rainbow Plaza",
@@ -36,7 +35,7 @@ export default function EventJsonLd({ ctx }: { ctx: EventContext }) {
     organizer: {
       "@type": "Organization",
       name: "Reedsport/Winchester Bay Chamber of Commerce",
-      url: siteUrl,
+      url: SITE_URL,
       ...(ctx.settings.contact_email ? { email: ctx.settings.contact_email } : {}),
       ...(ctx.settings.contact_phone ? { telephone: ctx.settings.contact_phone } : {}),
     },
@@ -47,7 +46,7 @@ export default function EventJsonLd({ ctx }: { ctx: EventContext }) {
             name: "Daily admission",
             price: ctx.settings.admission_daily.replace(/[^0-9.]/g, "") || undefined,
             priceCurrency: "USD",
-            url: ctx.passesHref.startsWith("http") ? ctx.passesHref : `${siteUrl}/visit#passes`,
+            url: ctx.passesHref.startsWith("http") ? ctx.passesHref : `${SITE_URL}/visit#passes`,
             availability: "https://schema.org/InStock",
           },
         }

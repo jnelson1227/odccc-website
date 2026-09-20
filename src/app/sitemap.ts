@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site-url";
 import { getAllCarverSlugs } from "@/lib/queries";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://oregonccc.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getAllCarverSlugs();
@@ -19,13 +19,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...pages.map((page) => ({
-      url: `${siteUrl}${page.path}`,
+      url: `${SITE_URL}${page.path}`,
       lastModified: now,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
     ...slugs.map((slug) => ({
-      url: `${siteUrl}/carvers/${slug}`,
+      url: `${SITE_URL}/carvers/${slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.4,
