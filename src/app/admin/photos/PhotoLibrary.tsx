@@ -44,14 +44,21 @@ export default function PhotoLibrary({ media }: { media: MediaItem[] }) {
           <ul className="m-0 grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-3 lg:grid-cols-4">
             {media.map((item) => (
               <li key={item.id} className="flex flex-col gap-2">
-                <Image
-                  src={imageUrl(item.path) ?? ""}
-                  alt={item.alt}
-                  width={240}
-                  height={240}
-                  unoptimized
-                  className="aspect-square w-full rounded-md object-cover"
-                />
+                {/* A row whose file has gone missing shouldn't crash the page. */}
+                {imageUrl(item.path) ? (
+                  <Image
+                    src={imageUrl(item.path)!}
+                    alt={item.alt}
+                    width={240}
+                    height={240}
+                    unoptimized
+                    className="aspect-square w-full rounded-md object-cover"
+                  />
+                ) : (
+                  <div className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed border-admin-border text-[12px] text-admin-muted">
+                    Image missing
+                  </div>
+                )}
                 <span className="text-[12px] leading-snug text-admin-muted">{item.alt}</span>
                 <Remove item={item} />
               </li>

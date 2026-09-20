@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 
 /**
  * Old Wix URLs → new routes. See docs/05-domain-cutover.md.
- * All permanent (301) so search engines and printed links follow.
+ *
+ * statusCode: 301 rather than `statusCode: 301`, which emits a 308. Modern
+ * crawlers treat the two alike, but the cutover doc asks for 301s and older
+ * tools and link checkers understand them more reliably.
  */
 const nextConfig: NextConfig = {
   images: {
@@ -16,15 +19,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/event-information", destination: "/", permanent: true },
-      { source: "/event-history", destination: "/our-story", permanent: true },
-      { source: "/pro-carvers", destination: "/carvers#pro", permanent: true },
-      { source: "/semi-pro-carvers", destination: "/carvers#semi", permanent: true },
-      { source: "/vendors", destination: "/visit", permanent: true },
-      { source: "/contact-us", destination: "/visit#contact", permanent: true },
-      { source: "/sponsor", destination: "/sponsorship", permanent: true },
+      { source: "/event-information", destination: "/", statusCode: 301 },
+      { source: "/event-history", destination: "/our-story", statusCode: 301 },
+      { source: "/pro-carvers", destination: "/carvers#pro", statusCode: 301 },
+      { source: "/semi-pro-carvers", destination: "/carvers#semi", statusCode: 301 },
+      { source: "/vendors", destination: "/visit", statusCode: 301 },
+      { source: "/contact-us", destination: "/visit#contact", statusCode: 301 },
+      { source: "/sponsor", destination: "/sponsorship", statusCode: 301 },
       // /2018-winners, /2019-winners, /2024-winners and any other /*-winners
-      { source: "/:year(\\d{4})-winners", destination: "/our-story#winners", permanent: true },
+      { source: "/:year(\\d{4})-winners", destination: "/our-story#winners", statusCode: 301 },
     ];
   },
 };

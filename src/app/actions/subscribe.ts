@@ -2,13 +2,11 @@
 
 import { headers } from "next/headers";
 import { createServiceClient } from "@/lib/supabase/service";
+import type { ActionState } from "@/lib/actions/state";
 
-export type SubscribeState = {
-  status: "idle" | "success" | "error";
-  message: string;
-};
-
-export const INITIAL_SUBSCRIBE_STATE: SubscribeState = { status: "idle", message: "" };
+// The state type and its initial value live in @/lib/actions/state: a
+// "use server" file may only export async functions, so a constant here would
+// break the form at runtime.
 
 /**
  * Best-effort per-IP rate limit. An in-memory map only holds for the lifetime
@@ -42,9 +40,9 @@ function rateLimited(ip: string): boolean {
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function subscribe(
-  _prev: SubscribeState,
+  _prev: ActionState,
   formData: FormData,
-): Promise<SubscribeState> {
+): Promise<ActionState> {
   // Honeypot: a real person never fills a field they can't see.
   if (String(formData.get("company") ?? "").trim() !== "") {
     // Look successful so a bot doesn't learn to try again.

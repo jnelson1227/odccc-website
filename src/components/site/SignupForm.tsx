@@ -2,10 +2,11 @@
 
 import { useActionState, useId } from "react";
 import { useFormStatus } from "react-dom";
-import { INITIAL_SUBSCRIBE_STATE, subscribe } from "@/app/actions/subscribe";
+import { subscribe } from "@/app/actions/subscribe";
+import { IDLE } from "@/lib/actions/state";
 
 export default function SignupForm({ source }: { source: string }) {
-  const [state, formAction] = useActionState(subscribe, INITIAL_SUBSCRIBE_STATE);
+  const [state, formAction] = useActionState(subscribe, IDLE);
   const nameId = useId();
   const emailId = useId();
   const statusId = useId();
