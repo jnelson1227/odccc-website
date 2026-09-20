@@ -57,7 +57,15 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /*
+   * Deliberately NOT scroll-behavior: smooth.
+   *
+   * Next's router scrolls to the top on navigation, and smooth scrolling turns
+   * that into an animation which gets abandoned when the incoming page renders
+   * and the document height changes — so clicking the logo from a long page
+   * like /carvers dropped you into the middle of the homepage instead of the
+   * top. Instant jumps for in-page anchors are a small price.
+   */
   /* Sticky nav is 99px tall on desktop; keep #pro / #semi anchors clear of it. */
   scroll-padding-top: 110px;
 }
@@ -71,9 +79,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
