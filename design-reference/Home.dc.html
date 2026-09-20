@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Homepage — Dark Fir with logo hero</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&amp;family=Archivo:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Archivo,'Helvetica Neue',sans-serif;background:#10231a;color:#f6f0e0}
+a{color:#f6f0e0}a:hover{color:#dca93e}
+</style>
+</helmet>
+<div style="width: 1440px; height: 2200px; box-sizing: border-box; background: #10231a; color: #f6f0e0; font-family: Archivo, 'Helvetica Neue', sans-serif; display: flex; flex-direction: column;">
+  <header style="position: relative; height: 1000px; overflow: hidden; display: flex; flex-direction: column;">
+    <img src="/images/site/hero-bg.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 1440px; height: 1000px; object-fit: cover;">
+    <div style="position: absolute; left: 0; top: 0; width: 1440px; height: 1000px; background: #10231a; opacity: {{wash}};"></div>
+    <div style="position: absolute; left: 0; bottom: 0; width: 1440px; height: 220px; background: linear-gradient(rgba(16,35,26,0), #10231a);"></div>
+
+    <nav aria-label="Primary" style="position: relative; display: flex; align-items: center; justify-content: space-between; padding: 26px 64px; border-bottom: 1px solid rgba(246,240,224,0.18);">
+      <div style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 3px; text-transform: uppercase; color: #b3bba7;">Reedsport · The Chainsaw Carving Capital of Oregon</div>
+      <div style="display: flex; align-items: center; gap: 36px; font-size: 15px; font-weight: 500;">
+        <a href="History.dc.html" style="text-decoration: none;">The Event</a>
+        <a href="Carvers.dc.html" style="text-decoration: none;">Carvers</a>
+        <a href="Schedule.dc.html" style="text-decoration: none;">Schedule</a>
+        <a href="Visit.dc.html" style="text-decoration: none;">Visit</a>
+        <a href="Sponsors.dc.html" style="text-decoration: none;">Sponsors</a>
+        <a href="Visit.dc.html" style="background: #f6f0e0; color: #10231a; text-decoration: none; font-weight: 700; padding: 13px 22px; border-radius: 2px;">Get Passes</a>
+      </div>
+    </nav>
+
+    <div style="position: relative; flex-grow: 1; display: grid; grid-template-columns: 980px 1fr; gap: 12px; padding: 40px 40px 0 64px;">
+      <div style="display: flex; flex-direction: column; justify-content: center; gap: 22px; padding-bottom: 40px;">
+        <div style="display: flex; align-items: center; gap: 18px; font-family: 'Big Shoulders Display', Impact, sans-serif; font-size: 40px; font-weight: 700; line-height: 1; letter-spacing: 2px; text-transform: uppercase; color: {{accent}};"><span style="width: 56px; height: 4px; background: {{accent}};"></span>27th Annual · June 17–20, 2027</div>
+
+        <div style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 188px; line-height: 0.84; text-transform: uppercase; letter-spacing: -1px;">Four days.<br><span style="color: {{accent}};">80 tons</span><br>of logs.</div>
+        <p style="margin: 0; font-size: 26px; line-height: 1.45; color: #d2cdbb; max-width: 720px; text-wrap: pretty;"><strong style="color: #f6f0e0; font-weight: 700;">30+ world-class carvers</strong> from across the U.S., Canada, the U.K. and beyond turn raw Oregon timber into art — live, on Reedsport's waterfront.</p>
+        <p style="margin: 0; font-size: 26px; line-height: 1.45; color: #d2cdbb; max-width: 720px; text-wrap: pretty;"><strong style="color: #f6f0e0; font-weight: 700;">Now in its 27th year,</strong> the Oregon Divisional Chainsaw Carving Championship fills four days with live demonstrations, daily Quick Carve contests and auctions, food, vendors and more.</p>
+
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding-bottom: 60px;">
+        <h1 style="margin: 0 -24px; display: flex; justify-content: center;"><img src="/images/site/odccc-logo.png" alt="Oregon Divisional Chainsaw Carving Championship logo — Reedsport, OR" style="width: 390px; height: 260px; object-fit: contain; display: block; filter: drop-shadow(0 18px 30px rgba(0,0,0,0.55));"></h1>
+        <div style="display: flex; align-items: center; gap: 16px; padding: 12px 16px; border: 1px solid rgba(246,240,224,0.3); background: rgba(16,35,26,0.7);">
+          <svg viewBox="0 0 740 545" width="58" height="43" role="img" aria-label="Map of Oregon with Reedsport marked on the central coast"><path d="M35.1 537.5 L414.0 537.5 L681.3 537.5 L681.3 308.7 L690.3 275.0 L679.5 258.8 L664.2 250.0 L666.9 232.5 L684.0 193.7 L699.3 171.2 L717.3 130.0 L732.6 91.2 L724.5 68.7 L703.8 56.2 L691.2 37.5 L504.9 37.5 L481.5 46.2 L450.0 47.5 L414.0 71.3 L355.5 71.3 L306.0 85.0 L276.3 72.5 L243.0 80.0 L211.5 93.8 L165.6 81.2 L163.8 53.7 L144.0 25.0 L108.0 12.5 L58.5 8.8 L56.7 62.5 L58.5 125.0 L46.8 187.5 L43.2 250.0 L40.5 300.0 L27.0 362.5 L18.0 412.5 L4.5 437.5 L18.0 487.5 Z" fill="#1f3d2c" stroke="#f6f0e0" stroke-width="12" stroke-linejoin="round"></path><circle cx="58" cy="325" r="44" fill="{{accent}}" stroke="#10231a" stroke-width="10"></circle></svg>
+          <div style="display: flex; flex-direction: column; gap: 3px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 19px; text-transform: uppercase; line-height: 1;">Reedsport, OR</span><span style="font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #b3bba7;">Rainbow Plaza · Hwy 101</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px; align-self: stretch;">
+          <a href="Visit.dc.html" style="background: {{accent}}; color: #2a1508; text-decoration: none; font-weight: 700; font-size: 17px; padding: 18px 30px; border-radius: 2px; text-align: center; box-shadow: 4px 4px 0 #08130d;">Plan your visit</a>
+          <a href="Sponsorship.dc.html" style="border: 2px solid #f6f0e0; color: #f6f0e0; text-decoration: none; font-weight: 700; font-size: 17px; padding: 16px 28px; border-radius: 2px; text-align: center; background: rgba(16,35,26,0.6);">Sponsor the championship</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section aria-labelledby="carvers-h" style="display: flex; flex-direction: column; gap: 32px; padding: 20px 64px 64px;">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid #2c4a39; padding-bottom: 20px;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: {{accent}};">2026 final carvings</div>
+        <h2 id="carvers-h" style="margin: 0; font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 56px; line-height: 0.95; text-transform: uppercase;">Meet the carvers</h2>
+      </div>
+      <a href="Carvers.dc.html" style="font-weight: 700; font-size: 16px; text-decoration: none; color: {{accent}};">See all 30+ carvers →</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px;">
+      <a href="Carvers.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: #f6f0e0;"><img src="/images/carvers/colby-herrington.jpg" alt="Carved deer and fawns rising from a stump" style="width: 100%; height: 300px; object-fit: cover; display: block; border: 2px solid #2c4a39;"><span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 26px; text-transform: uppercase; line-height: 1;">Colby Herrington</span><span style="font-size: 14px; color: #b3bba7;">Bonney Lake, WA</span><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: {{accent}};">2025 ODCCC champion</span></span></a><a href="Carvers.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: #f6f0e0;"><img src="/images/carvers/rachael-mirth.jpg" alt="Carved red sockeye salmon" style="width: 100%; height: 300px; object-fit: cover; display: block; border: 2px solid #2c4a39;"><span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 26px; text-transform: uppercase; line-height: 1;">Racheal Mirth</span><span style="font-size: 14px; color: #b3bba7;">Kansas City, KS</span><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: {{accent}};">Mirthful Creations</span></span></a><a href="Carvers.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: #f6f0e0;"><img src="/images/carvers/ryan-anderson.jpg" alt="Carved sea turtles and clam shell" style="width: 100%; height: 300px; object-fit: cover; display: block; border: 2px solid #2c4a39;"><span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 26px; text-transform: uppercase; line-height: 1;">Ryan Anderson</span><span style="font-size: 14px; color: #b3bba7;">Coos Bay, OR</span><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: {{accent}};">200+ competitions</span></span></a><a href="Carvers.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: #f6f0e0;"><img src="/images/carvers/bob-king.jpg" alt="Carved owls perched in a bare tree" style="width: 100%; height: 300px; object-fit: cover; display: block; border: 2px solid #2c4a39;"><span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 26px; text-transform: uppercase; line-height: 1;">Bob King</span><span style="font-size: 14px; color: #b3bba7;">Edgewood, WA</span><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: {{accent}};">ODCCC co-founder, 2000</span></span></a><a href="Carvers.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: #f6f0e0;"><img src="/images/carvers/bill-baker.jpg" alt="Carved Sasquatch reading to a child" style="width: 100%; height: 300px; object-fit: cover; display: block; border: 2px solid #2c4a39;"><span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 26px; text-transform: uppercase; line-height: 1;">Bill Baker</span><span style="font-size: 14px; color: #b3bba7;">Naperville, IL</span><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: {{accent}};">27+ years as a pro</span></span></a><a href="Carvers.dc.html" style="display: flex; flex-direction: column; gap: 12px; text-decoration: none; color: #f6f0e0;"><img src="/images/carvers/jacob-lucas.jpg" alt="Carved face of a fern goddess" style="width: 100%; height: 300px; object-fit: cover; display: block; border: 2px solid #2c4a39;"><span style="display: flex; flex-direction: column; gap: 4px;"><span style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 26px; text-transform: uppercase; line-height: 1;">Jacob Lucas</span><span style="font-size: 14px; color: #b3bba7;">Bonney Lake, WA</span><span style="font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: {{accent}};">Custom detail work</span></span></a>
+    </div>
+  </section>
+<section aria-labelledby="signup-h" style="margin: 0 64px 72px; padding: 44px 48px; border: 2px solid #dca93e; background: #15291f; display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center;">
+  <div style="display: flex; flex-direction: column; gap: 10px;"><div style="font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #dca93e;">Stay in the loop</div><h2 id="signup-h" style="margin: 0; font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 52px; line-height: 0.95; text-transform: uppercase;">Get championship updates</h2><p style="margin: 0; font-size: 17px; line-height: 1.5; color: #d2cdbb;">Carver announcements, the schedule, auction highlights and early passes — straight to your inbox.</p></div>
+  <form style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 6px;"><label for="su-name" style="font-size: 13px; font-weight: 700;">First name</label><input id="su-name" type="text" autocomplete="given-name" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid #3d5e4b; background: #10231a; color: #f6f0e0;"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px;"><label for="su-email" style="font-size: 13px; font-weight: 700;">Email</label><input id="su-email" type="email" autocomplete="email" placeholder="you@example.com" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1px solid #3d5e4b; background: #10231a; color: #f6f0e0;"></div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;"><span style="font-size: 13px; color: #b3bba7;">No spam. Unsubscribe anytime.</span><button type="submit" style="border: none; background: #dca93e; color: #2a1508; font: inherit; font-weight: 700; font-size: 17px; padding: 16px 28px; cursor: pointer;">Sign me up</button></div>
+  </form>
+</section><footer style="margin-top: auto; border-top: 1px solid #2c4a39; background: #0c1b14; padding: 56px 64px 40px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px;">
+  <div style="display: flex; flex-direction: column; gap: 16px;">
+    <img src="/images/site/odccc-logo.png" alt="Oregon Divisional Chainsaw Carving Championship" style="width: 165px; height: 110px; object-fit: contain; display: block;">
+    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #b3bba7;">Produced by the Reedsport/Winchester Bay Chamber of Commerce. Every Father's Day weekend at Rainbow Plaza, Reedsport — the Chainsaw Carving Capital of Oregon.</p>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px;"><div style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 20px; text-transform: uppercase; color: #dca93e;">The Event</div><a href="Schedule.dc.html" style="text-decoration: none;">Schedule</a><a href="Carvers.dc.html" style="text-decoration: none;">Carvers</a><a href="History.dc.html" style="text-decoration: none;">History &amp; past winners</a></div>
+  <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px;"><div style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 20px; text-transform: uppercase; color: #dca93e;">Get Involved</div><a href="Visit.dc.html" style="text-decoration: none;">Plan your visit</a><a href="Sponsors.dc.html" style="text-decoration: none;">Our sponsors</a><a href="Sponsorship.dc.html" style="text-decoration: none;">Become a sponsor</a><a href="#" style="text-decoration: none;">Vendor application</a><a href="#" style="text-decoration: none;">Carver application</a></div>
+  <div style="display: flex; flex-direction: column; gap: 10px; font-size: 15px; color: #d2cdbb;"><div style="font-family: 'Big Shoulders Display', Impact, sans-serif; font-weight: 900; font-size: 20px; text-transform: uppercase; color: #dca93e;">Contact</div><span>Call 541-271-3495</span><span>Text 541-662-2154</span><a href="mailto:reedsportchamberofcommerce@gmail.com" style="text-decoration: none; word-break: break-all;">reedsportchamberofcommerce@gmail.com</a><span>2741 Frontage Road, Reedsport, OR 97467</span></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#dca93e","options":["#dca93e","#e8702a","#c0562f"]},"wash":{"editor":"range","default":0.8,"min":0.5,"max":0.95,"step":0.01},"$preview":{"width":1440,"height":2200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#dca93e', wash: this.props.wash ?? 0.8 };
+  }
+}
+</script>
+</body>
+</html>

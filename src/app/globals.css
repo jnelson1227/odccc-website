@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Dark Fir design system — docs/02-design-system.md
+   Exact values from the approved mockups in design-reference/.
+   --------------------------------------------------------------- */
+@theme {
+  /* Public site */
+  --color-fir-900: #10231a; /* page background, hero wash */
+  --color-fir-850: #15291f; /* cards and panels on dark */
+  --color-fir-950: #0c1b14; /* footer */
+  --color-line: #2c4a39; /* hairlines, card borders */
+  --color-input-border: #3d5e4b; /* inputs on dark */
+  --color-cream: #f6f0e0; /* primary text (the logo's cream) */
+  --color-body: #d2cdbb; /* paragraph text */
+  --color-sub: #b3bba7; /* captions, secondary labels */
+  --color-gold: #dca93e; /* the logo's gold */
+  --color-brown: #2a1508; /* text on gold buttons */
+  --color-placeholder: #2f5140; /* initials in "photo coming" cards */
+  --color-fir-panel: #1f3d2c; /* Oregon map fill */
+
+  /* Admin (light UI) */
+  --color-admin-bg: #f3f0e7;
+  --color-admin-card: #ffffff;
+  --color-admin-border: #ddd6c4;
+  --color-admin-rule: #ece6d7;
+  --color-admin-text: #1c2a22;
+  --color-admin-muted: #5a6458;
+  --color-admin-tint: #faf7ef;
+  --color-admin-highlight: #fbf4df;
+  --color-admin-highlight-border: #ecd9a6;
+  --color-locked-bg: #eef2ea;
+  --color-locked-border: #cfd9c9;
+  --color-locked-text: #3f6b50;
+  --color-pill-ok-bg: #e3efe2;
+  --color-pill-ok-text: #2f6b43;
+  --color-pill-warn-bg: #fbf0d6;
+  --color-pill-warn-text: #8a5a0e;
+  --color-pill-off-bg: #efe9e0;
+  --color-pill-off-text: #6b5d4d;
+
+  --font-display: var(--font-big-shoulders), Impact, sans-serif;
+  --font-sans: var(--font-archivo), "Helvetica Neue", sans-serif;
+
+  /* Fluid type — desktop value from the mockup → mobile floor */
+  --text-hero: clamp(3.9rem, 13vw, 11.75rem); /* 188px → ~84px */
+  --text-page-h1: clamp(3.2rem, 8.5vw, 7.5rem); /* 120px → 64px */
+  --text-section-h2: clamp(2.375rem, 4vw, 3.5rem); /* 56px → 38px */
+  --text-signup-h2: clamp(2.25rem, 3.8vw, 3.25rem); /* 52px → 36px */
+  --text-band-h2: clamp(2rem, 3.4vw, 3rem); /* 48px → 32px */
+  --text-day-h3: clamp(2.125rem, 3vw, 2.75rem); /* 44px → 34px */
+  --text-eyebrow-lg: clamp(1.125rem, 1.9vw, 1.625rem); /* 26px → 18px */
+  --text-hero-eyebrow: clamp(1.375rem, 2.9vw, 2.5rem); /* 40px → 22px */
+  --text-stat: clamp(3rem, 5vw, 4.5rem); /* 72px → 48px */
+  --text-lead: clamp(1.125rem, 1.9vw, 1.625rem); /* 26px → 18px */
+  --text-subtitle: clamp(1.0625rem, 1.6vw, 1.375rem); /* 22px → 17px */
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Sticky nav is 99px tall on desktop; keep #pro / #semi anchors clear of it. */
+  scroll-padding-top: 110px;
+}
+
+body {
+  margin: 0;
+  background: var(--color-fir-900);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Visible focus for keyboard users on both the dark site and the light admin. */
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+}
+
+/* Gold eyebrow: 13px / 3px tracking / uppercase — used above every section head. */
+@utility eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* Primary button: gold on brown text, 2px radius. */
+@utility btn-gold {
+  display: inline-block;
+  background: var(--color-gold);
+  color: var(--color-brown);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  padding: 1.125rem 1.875rem;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Secondary button: 2px cream outline. */
+@utility btn-outline {
+  display: inline-block;
+  border: 2px solid var(--color-cream);
+  color: var(--color-cream);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  padding: 1rem 1.75rem;
+  border-radius: 2px;
+  text-align: center;
+  text-decoration: none;
+  background: rgba(16, 35, 26, 0.6);
+}
