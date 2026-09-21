@@ -2,10 +2,14 @@ import "server-only";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
 /**
- * Service-role client. Bypasses RLS, so it is used in exactly one place: the
- * newsletter server action, which inserts into `subscribers` (a table with no
- * public insert policy) after validating input, checking a honeypot and
- * rate-limiting by IP.
+ * Service-role client. Bypasses RLS, so it is used in exactly two places:
+ *
+ * - the newsletter server action, which inserts into `subscribers` (a table
+ *   with no public insert policy) after validating input, checking a honeypot
+ *   and rate-limiting by IP;
+ * - setAdminPassword, which needs GoTrue's admin API to set a password for
+ *   someone other than the signed-in user. That one is owner-only and refuses
+ *   any address that isn't already on the `admins` allowlist.
  *
  * Returns null when the key is not configured, so the rest of the site still
  * builds and runs without it.

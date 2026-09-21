@@ -1,10 +1,11 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import SaveBar, { Toast } from "@/components/admin/SaveBar";
+import SaveBar, { SubmitButton, Toast } from "@/components/admin/SaveBar";
 import { Card, Field, TableHead, cellClass, inputClass } from "@/components/admin/ui";
 import { IDLE } from "@/lib/actions/state";
 import { addAdmin, removeAdmin } from "@/lib/actions/content";
+import { setAdminPassword } from "@/lib/actions/account";
 import type { Admin } from "@/lib/types";
 
 const DATE = new Intl.DateTimeFormat("en-US", {
@@ -27,7 +28,7 @@ export default function AdminsEditor({
     <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[400px_1fr]">
       <Card
         title="Add an admin"
-        hint="They sign in with a link emailed to this address — there's no password to set up."
+        hint="Add them here first, then set them a password below and tell them what it is."
       >
         <form action={action} className="flex flex-col gap-4">
           <Field label="Email" htmlFor="admin-email">
@@ -56,8 +57,8 @@ export default function AdminsEditor({
 
       <Card title={`Admins (${admins.length})`}>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] border-collapse">
-            <TableHead columns={["Email", "Role", "Added", ""]} />
+          <table className="w-full min-w-[640px] border-collapse">
+            <TableHead columns={["Email", "Role", "Added", "Password", ""]} />
             <tbody>
               {admins.map((admin) => (
                 <tr key={admin.email}>
@@ -69,6 +70,9 @@ export default function AdminsEditor({
                   </td>
                   <td className={cellClass}>{admin.role}</td>
                   <td className={cellClass}>{DATE.format(new Date(admin.created_at))}</td>
+                  <td className={cellClass}>
+                    <SetPassword email={admin.email} />
+                  </td>
                   <td className={cellClass}>
                     {admin.email.toLowerCase() !== currentEmail.toLowerCase() && (
                       <RemoveAdmin email={admin.email} />
@@ -116,6 +120,65 @@ function RemoveAdmin({ email }: { email: string }) {
       >
         Keep
       </button>
+      <Toast state={state} />
+    </form>
+  );
+}
+
+/**
+ * An owner sets a volunteer's password and reads it out to them. Deliberately
+ * not emailed: mail from this site is the unreliable part, and it's what the
+ * password is here to route around.
+ */
+function SetPassword({ email }: { email: string }) {
+  const [state, action] = useActionState(setAdminPassword, IDLE);
+  const [open, setOpen] = useState(false);
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="min-h-11 cursor-pointer border-none bg-transparent px-1 text-[13px] font-semibold underline"
+      >
+        Set password
+      </button>
+    );
+  }
+
+  return (
+    <form action={action} className="flex flex-col gap-2 py-2">
+      <input type="hidden" name="email" value={email} />
+      <input
+        name="password"
+        type="password"
+        required
+        minLength={10}
+        placeholder="New password"
+        aria-label={`New password for ${email}`}
+        autoComplete="new-password"
+        className={`${inputClass} min-w-[200px]`}
+      />
+      <input
+        name="confirm"
+        type="password"
+        required
+        minLength={10}
+        placeholder="Type it again"
+        aria-label={`Confirm new password for ${email}`}
+        autoComplete="new-password"
+        className={`${inputClass} min-w-[200px]`}
+      />
+      <div className="flex flex-wrap items-center gap-2">
+        <SubmitButton label="Set it" />
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          className="min-h-11 cursor-pointer border-none bg-transparent px-1 text-[13px] font-semibold underline"
+        >
+          Cancel
+        </button>
+      </div>
       <Toast state={state} />
     </form>
   );

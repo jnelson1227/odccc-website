@@ -12,6 +12,7 @@ export const ADMIN_NAV = [
   { href: "/admin/winners", label: "Past winners" },
   { href: "/admin/photos", label: "Photos" },
   { href: "/admin/admins", label: "Admins", ownerOnly: true },
+  { href: "/admin/account", label: "Your account" },
 ] as const;
 
 export default function AdminNav({ isOwner }: { isOwner: boolean }) {

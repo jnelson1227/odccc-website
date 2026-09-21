@@ -21,7 +21,7 @@ export default async function LoginPage({
           />
           <h1 className="display m-0 text-[30px] font-black uppercase leading-none">Site admin</h1>
           <p className="m-0 text-center text-[14px] text-admin-muted">
-            We&apos;ll email you a link that signs you in. No password to remember.
+            Sign in with your email and password. Ask Jill if you don&apos;t have one yet.
           </p>
         </div>
 
@@ -43,15 +43,15 @@ export default async function LoginPage({
             <strong>That sign-in link didn&apos;t work.</strong>
             {error === "wrong-browser" ? (
               <span>
-                The link has to be opened in the same browser you asked for it from. Request a new
-                one below, then <strong>copy the link out of the email and paste it here</strong>
-                {" "}rather than clicking it.
+                A link only works in the browser that asked for it, and only until a newer one is
+                requested. <strong>Sign in with your password instead</strong> — it has none of
+                these problems.
               </span>
             ) : (
               <span>
                 Links work once and expire after an hour, and some email providers open them
-                automatically, which uses them up. Request a new one below and open it straight
-                away.
+                automatically, which uses them up.{" "}
+                <strong>Sign in with your password instead.</strong>
               </span>
             )}
           </div>

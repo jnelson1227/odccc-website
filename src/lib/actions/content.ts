@@ -221,7 +221,7 @@ export async function addAdmin(_prev: ActionState, form: FormData): Promise<Acti
 
   return {
     status: "success",
-    message: `${email} can now sign in. They'll need to request a sign-in link.`,
+    message: `${email} is on the list. Now set them a password so they can sign in.`,
   };
 }
 

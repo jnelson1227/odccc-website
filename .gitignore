@@ -10,3 +10,9 @@ npm-debug.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Jill's full-resolution photo drops, staged here while picking shots for
+# public/images. Gigabytes of originals, and GitHub rejects any file over
+# 100MB — so never let `git add -A` sweep them into a commit.
+/Final Carvings Chainsaw 2026/
+/Social Sharing Chainsaw 2026/
