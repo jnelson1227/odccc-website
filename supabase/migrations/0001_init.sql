@@ -62,7 +62,7 @@ create table public.settings (
   carver_application_url text,
   vendor_application_url text,
   sponsorship_form_path text,
-  stat_visitors text default '2,500',
+  stat_visitors text default '4,000+',
   carvers_page_mode text not null default 'current' check (carvers_page_mode in ('current','previous')),
   updated_at timestamptz not null default now()
 );

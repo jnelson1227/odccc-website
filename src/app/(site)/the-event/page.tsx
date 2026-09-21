@@ -104,7 +104,7 @@ const WHAT_TO_EXPECT = [
   },
   {
     title: "Quick Carve",
-    body: "Daily at 10:30 a.m. — 90 minutes on the clock, a finished sculpture at the buzzer.",
+    body: "Daily at 10:30 a.m. — 90 minutes on the clock, finished sculptures at the buzzer.",
   },
   {
     title: "Live auctions",
@@ -169,7 +169,7 @@ export default async function TheEventPage() {
             <Stat value={carverCount} label="carvers competing" />
             <Stat value="4 days" label="Thursday to Father's Day" />
             <Stat value="2" label="divisions — Pro and Semi-Pro" />
-            <Stat value={settings.stat_visitors ?? "2,500"} label="visitors a day" />
+            <Stat value={settings.stat_visitors ?? "4,000+"} label="visitors" />
           </dl>
         </section>
 
@@ -219,8 +219,8 @@ export default async function TheEventPage() {
               are crowned at the awards ceremony that afternoon.
             </Panel>
             <Panel title="The Quick Carve">
-              A separate contest every day: a fresh log, ninety minutes on the clock, one finished
-              piece at the buzzer. It&apos;s the thing to watch if you only have an hour — you see
+              A separate contest every day: a fresh log, ninety minutes on the clock, finished
+              pieces at the buzzer. It&apos;s the thing to watch if you only have an hour — you see
               a whole sculpture happen start to finish.
             </Panel>
             <Panel title="The auctions">

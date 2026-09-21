@@ -317,7 +317,7 @@ export default function EventForm({
                   className={inputClass}
                 />
               </Field>
-              <Field label="Visitors a day (sponsorship stat)" htmlFor="stat_visitors">
+              <Field label="Visitors (sponsorship stat)" htmlFor="stat_visitors">
                 <input
                   id="stat_visitors"
                   name="stat_visitors"

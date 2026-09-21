@@ -44,7 +44,7 @@ export default async function SponsorshipPage() {
 
       <main id="main">
         <section className="grid grid-cols-2 gap-8 border-b border-line px-6 pb-14 pt-12 md:px-16 md:pt-16 lg:grid-cols-4">
-          <Stat value={settings.stat_visitors ?? "2,500"} label="visitors a day at Rainbow Plaza" />
+          <Stat value={settings.stat_visitors ?? "4,000+"} label="visitors at Rainbow Plaza" />
           <Stat value="4 days" label="of crowds, carving and live auctions" />
           <Stat value={`${edition(year)} years`} label="running since 2000" />
           <Stat value="2011" label="Ovation Award — Best Performing Art Festival in Oregon" />

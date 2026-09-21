@@ -47,7 +47,7 @@ As in the mockup. Directions link: Google Maps for "Rainbow Plaza, Reedsport, OR
 3. Gold band → /sponsorship.
 
 ## Sponsorship (/sponsorship)
-Stats row (editable in settings): 2,500 visitors a day · 4 days · *27* years (computed) · 2011 Ovation Award. Levels from `sponsorship_levels`: the first level (Presenting) renders as the wide featured card, the next two side by side, the rest in rows of three. Each card shows availability ("1 available" / "Open" / "Sold" when `max_available` is reached by committed sponsors), price, and benefits. "Download the sponsorship form (PDF)" appears when a PDF has been uploaded. Contact band.
+Stats row (editable in settings): 4,000+ visitors · 4 days · *27* years (computed) · 2011 Ovation Award. Levels from `sponsorship_levels`: the first level (Presenting) renders as the wide featured card, the next two side by side, the rest in rows of three. Each card shows availability ("1 available" / "Open" / "Sold" when `max_available` is reached by committed sponsors), price, and benefits. "Download the sponsorship form (PDF)" appears when a PDF has been uploaded. Contact band.
 
 ## Our Story
 Intro text, timeline (static content in code is fine for v1, since it rarely changes), then a **Past winners** table from `winners` (year, division, 1st, 2nd, 3rd), newest first.
