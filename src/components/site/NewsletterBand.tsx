@@ -4,8 +4,9 @@ import SignupForm from "./SignupForm";
 export default function NewsletterBand({ source }: { source: string }) {
   return (
     <section
+      id="updates"
       aria-labelledby="signup-h"
-      className="mx-6 mb-12 grid grid-cols-1 items-center gap-8 border-2 border-gold bg-fir-850 px-6 py-10 md:mx-16 md:mb-[72px] md:px-12 md:py-11 lg:grid-cols-[1fr_1.15fr] lg:gap-12"
+      className="mx-6 mb-12 scroll-mt-8 grid grid-cols-1 items-center gap-8 border-2 border-gold bg-fir-850 px-6 py-10 md:mx-16 md:mb-[72px] md:px-12 md:py-11 lg:grid-cols-[1fr_1.15fr] lg:gap-12"
     >
       <div className="flex flex-col gap-[10px]">
         <div className="eyebrow">Stay in the loop</div>

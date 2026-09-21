@@ -88,9 +88,17 @@ export default async function SchedulePage() {
                 Buy passes
               </a>
             ) : (
-              <Link href="/visit" className="btn-gold flex min-h-11 items-center self-start">
-                Plan your visit
-              </Link>
+              <div className="flex flex-col items-start gap-2">
+                <Link href="/visit" className="btn-gold flex min-h-11 items-center">
+                  Plan your visit
+                </Link>
+                <a
+                  href="#updates"
+                  className="inline-flex min-h-11 items-center text-[15px] font-bold text-gold underline underline-offset-4"
+                >
+                  Sign up for updates
+                </a>
+              </div>
             )}
           </div>
         </section>

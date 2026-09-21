@@ -109,26 +109,72 @@ export default async function VisitPage() {
               >
                 Get directions
               </a>
-              <a
-                id="passes"
-                href={ticketUrl ?? `mailto:${settings.contact_email ?? ""}`}
-                {...(ticketUrl ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="btn-outline flex min-h-11 items-center justify-center"
-              >
-                {ticketUrl ? "Buy passes" : "Ask about passes"}
-              </a>
+              {ticketUrl ? (
+                <a
+                  href={ticketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline flex min-h-11 items-center justify-center"
+                >
+                  Buy passes
+                </a>
+              ) : (
+                <a href="#passes" className="btn-outline flex min-h-11 items-center justify-center">
+                  Passes
+                </a>
+              )}
             </div>
-            {!ticketUrl && (
-              <p className="m-0 text-[15px] text-sub">
-                Passes are sold at the gate: {settings.admission_daily ?? "—"} a day,{" "}
-                {settings.admission_pass ?? "—"} for all four. Online sales are coming.
-              </p>
-            )}
           </div>
 
           <div className="flex justify-center border border-line bg-fir-850 p-6 md:p-8">
             <OregonMap variant="large" className="h-auto w-full max-w-[460px]" />
           </div>
+        </section>
+
+        {/* ------------------------------------------------------- passes */}
+        <section
+          id="passes"
+          className="mx-6 mb-14 flex scroll-mt-8 flex-col items-start justify-between gap-6 border border-line bg-fir-850 px-6 py-8 md:mx-16 md:flex-row md:items-center md:px-12 md:py-10"
+        >
+          <div className="flex flex-col gap-2">
+            <div className="eyebrow">Passes</div>
+            {ticketUrl ? (
+              <>
+                <h2 className="display m-0 text-(length:--text-band-h2) font-black">
+                  Passes are on sale
+                </h2>
+                <p className="m-0 text-[18px] leading-[1.5] text-body">
+                  {settings.admission_daily ?? "—"} a day, {settings.admission_pass ?? "—"} for
+                  all four. Gates open daily at {settings.gate_open_time ?? "8:00 a.m."}
+                </p>
+              </>
+            ) : (
+              <>
+                <h2 className="display m-0 text-(length:--text-band-h2) font-black">
+                  Tickets aren&apos;t on sale yet
+                </h2>
+                <p className="m-0 max-w-[620px] text-[18px] leading-[1.5] text-body">
+                  Passes are sold at the gate: {settings.admission_daily ?? "—"} a day,{" "}
+                  {settings.admission_pass ?? "—"} for all four. Sign up and we&apos;ll email you
+                  when online sales open.
+                </p>
+              </>
+            )}
+          </div>
+          {ticketUrl ? (
+            <a
+              href={ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold flex min-h-11 items-center justify-center"
+            >
+              Buy passes
+            </a>
+          ) : (
+            <a href="#updates" className="btn-gold flex min-h-11 items-center justify-center">
+              Sign up for updates
+            </a>
+          )}
         </section>
 
         <section className="flex flex-col gap-7 px-6 pb-20 md:px-16">
