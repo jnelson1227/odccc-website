@@ -78,7 +78,8 @@ export async function GET(request: NextRequest) {
 /**
  * Column names match the Chamber's Airtable carver table field for field
  * (First Name, Last Name, Division, Phone Number, T-Shirt Size, Email, Mailing
- * Address, Vendor Space, Notes, FB), so Airtable's CSV import maps them without
+ * Address, Vendor Space, Notes, FB — FB now carries the Facebook link), so
+ * Airtable's CSV import maps them without
  * anyone re-pairing columns. The rest are the questions the printed form asks
  * that the table doesn't have a field for yet — map them or skip them.
  */
@@ -95,6 +96,8 @@ function carverRows(rows: CarverApplication[]) {
       "Vendor Space",
       "Notes",
       "FB",
+      "Website",
+      "Instagram",
       "Submitted",
       "Year",
       "Status",
@@ -122,7 +125,9 @@ function carverRows(rows: CarverApplication[]) {
       mailingAddress(r),
       r.wants_selling_space ? `Yes — ${r.selling_spaces ?? 1} space${(r.selling_spaces ?? 1) === 1 ? "" : "s"}` : "No",
       r.bio ?? "",
-      r.public_contact ?? "",
+      r.facebook ?? "",
+      r.website ?? "",
+      r.instagram ?? "",
       r.created_at.slice(0, 10),
       String(r.year),
       r.status,

@@ -22,6 +22,7 @@ import {
 } from "@/lib/actions/applications";
 import { APPLICATION_STATUSES, money, paymentMethodLabel } from "@/lib/applications";
 import { imageUrl } from "@/lib/images";
+import { SOCIAL_LABEL, socialLabel, socialUrl, type Social } from "@/lib/social";
 import type { ApplicationStatus, CarverApplication, VendorApplication } from "@/lib/types";
 
 type Kind = "carver" | "vendor";
@@ -368,7 +369,17 @@ function CarverDetail({ row }: { row: CarverApplication }) {
           <Detail label="Bio" block>
             {row.bio ?? <em className="text-admin-muted">Not provided yet</em>}
           </Detail>
-          <Detail label="Public contact">{row.public_contact ?? "—"}</Detail>
+          <Detail label="Website">
+            {row.website ? (
+              <a href={row.website} target="_blank" rel="noopener noreferrer">
+                {row.website.replace(/^https?:\/\/(www\.)?/i, "").replace(/\/$/, "")}
+              </a>
+            ) : (
+              "—"
+            )}
+          </Detail>
+          <SocialDetail platform="facebook" value={row.facebook} />
+          <SocialDetail platform="instagram" value={row.instagram} />
         </Section>
 
         {row.wants_selling_space && (
@@ -596,6 +607,25 @@ function Review({
 }
 
 // --------------------------------------------------------------- pieces
+
+/** A social value as a link when it resolves, plain text when it's just a page name. */
+function SocialDetail({ platform, value }: { platform: Social; value: string | null }) {
+  if (!value) return <Detail label={SOCIAL_LABEL[platform]}>—</Detail>;
+  const href = socialUrl(platform, value);
+  return (
+    <Detail label={SOCIAL_LABEL[platform]}>
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer">
+          {socialLabel(value)}
+        </a>
+      ) : (
+        <>
+          {value} <span className="text-admin-muted">(no link — page name only)</span>
+        </>
+      )}
+    </Detail>
+  );
+}
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (

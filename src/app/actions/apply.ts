@@ -95,6 +95,19 @@ function link(form: FormData, key: string): string | null {
 }
 
 /**
+ * A social handle or profile link, kept in the form the carver gave it — the
+ * site's social helper decides later whether it can be linked. A URL still has
+ * to be http(s); everything else is trimmed text.
+ */
+function social(form: FormData, key: string): string | null {
+  const raw = field(form, key, 300);
+  if (!raw) return null;
+  if (/^https?:\/\//i.test(raw)) return link(form, key);
+  if (/^[a-z0-9.-]+\.[a-z]{2,}(\/|$)/i.test(raw)) return link(form, key);
+  return raw;
+}
+
+/**
  * The contact block both forms share. Returns an error message, or the values.
  * `phone` is checked for digits rather than a shape — the Chamber gets numbers
  * from Canada and the U.K. too.
@@ -284,7 +297,9 @@ export async function applyAsCarver(
     quick_carve_comfort: comfort,
     experience,
     bio: optional(form, "bio", 5_000),
-    public_contact: optional(form, "public_contact", 300),
+    website: link(form, "website"),
+    facebook: social(form, "facebook"),
+    instagram: social(form, "instagram"),
     photo_paths: photos,
     wants_selling_space: wantsSelling,
     selling_business_name: wantsSelling ? optional(form, "selling_business_name", 150) : null,

@@ -143,13 +143,35 @@ export default function CarverApplicationForm({
           placeholder="Your carving background, your style, what you've won, where you're from and what inspires your work."
           hint="Write it the way you'd want it read out — we publish it close to as written."
         />
-        <TextField
-          name="public_contact"
-          label="Contact details to publish with your bio"
-          maxLength={300}
-          placeholder="Facebook page, Instagram handle, website…"
-          hint="Only what you want the public to see. Paste full links where you have them — we don't guess at page addresses."
-        />
+        <p className="m-0 max-w-[70ch] text-[15px] leading-[1.55] text-body">
+          Where should people find you? Only what you want the public to see — these go on your
+          page on this site if you&apos;re selected.
+        </p>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <TextField
+            name="website"
+            label="Website"
+            type="url"
+            inputMode="url"
+            maxLength={300}
+            placeholder="https://"
+            autoComplete="url"
+          />
+          <TextField
+            name="facebook"
+            label="Facebook"
+            maxLength={300}
+            placeholder="Paste the link to your page"
+            hint="A full link is best — a page name alone can't be turned into one."
+          />
+          <TextField
+            name="instagram"
+            label="Instagram"
+            maxLength={300}
+            placeholder="@yourhandle"
+            hint="Your handle or the link to your profile."
+          />
+        </div>
       </Fieldset>
 
       <Fieldset

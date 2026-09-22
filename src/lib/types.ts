@@ -190,7 +190,10 @@ export type CarverApplication = {
   quick_carve_comfort: QuickCarveComfort;
   experience: string;
   bio: string | null;
-  public_contact: string | null;
+  /** Published with the bio if selected — same shape as the carver profile's. */
+  website: string | null;
+  facebook: string | null;
+  instagram: string | null;
   photo_paths: string[];
   /** The optional 10'x12' space for selling finished carvings, carvings only. */
   wants_selling_space: boolean;
