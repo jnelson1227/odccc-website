@@ -63,6 +63,16 @@ export default function VendorApplicationForm({
             liability insurance naming the Chamber and the City of Reedsport as additional
             insured. Have your agent send it in now rather than bringing it with you — vendors
             without a correct certificate can&apos;t set up.
+            {contactEmail && (
+              <>
+                {" "}
+                Email it to{" "}
+                <a href={`mailto:${contactEmail}`} className="font-bold text-gold">
+                  {contactEmail}
+                </a>
+                .
+              </>
+            )}
           </p>
         )}
         {contactEmail && (
@@ -208,6 +218,15 @@ export default function VendorApplicationForm({
             Commerce, 2741 Frontage Road, Reedsport, OR 97467. Please don&apos;t send cash. To pay
             by card, call 541-271-3495 — card payments carry a 3% processing fee.
           </p>
+          {contactEmail && (
+            <p className="m-0">
+              Insurance certificates and any other paperwork can be emailed to{" "}
+              <a href={`mailto:${contactEmail}`} className="font-bold text-gold">
+                {contactEmail}
+              </a>
+              .
+            </p>
+          )}
           <p className="m-0">
             <strong className="text-cream">There are no refunds</strong>, and a space is only
             reserved once the application and full payment are in and the Chainsaw Committee has
@@ -230,9 +249,20 @@ export default function VendorApplicationForm({
           options={WORKERS_COMP_OPTIONS}
           required
         />
-        <p className="m-0 max-w-[70ch] text-[14px] leading-[1.55] text-sub">
-          If you employ subject workers, instruct your insurance agent to send proof of coverage to
-          the Chamber at 2741 Frontage Road, Reedsport, OR 97467 before the event.
+        <p className="m-0 max-w-[70ch] text-[15px] leading-[1.55] text-body">
+          If you employ subject workers, have your insurance agent send proof of coverage before the
+          event
+          {contactEmail ? (
+            <>
+              {" "}
+              to{" "}
+              <a href={`mailto:${contactEmail}`} className="font-bold text-gold">
+                {contactEmail}
+              </a>
+              , or by mail
+            </>
+          ) : null}{" "}
+          to the Chamber at 2741 Frontage Road, Reedsport, OR 97467.
         </p>
       </Fieldset>
 

@@ -5,6 +5,7 @@ import PageHeader from "@/components/site/PageHeader";
 import SiteNav from "@/components/site/SiteNav";
 import { InfoPanel } from "@/components/site/form";
 import { money } from "@/lib/applications";
+import { setupDayLabel } from "@/lib/dates";
 import { getEventContext } from "@/lib/queries";
 import VendorApplicationForm from "./VendorApplicationForm";
 
@@ -24,15 +25,7 @@ export default async function VendorApplicationPage() {
   const open = settings.vendor_applications_open;
   const deadline = settings.application_deadline?.trim();
 
-  // Set-up is the Wednesday before the Thursday the event opens.
-  const setup = new Date(dates.start);
-  setup.setUTCDate(setup.getUTCDate() - 1);
-  const setupLabel = new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    timeZone: "UTC",
-  }).format(setup);
+  const setupLabel = setupDayLabel(dates);
 
   return (
     <>
@@ -110,6 +103,15 @@ export default async function VendorApplicationPage() {
                     leaves time to correct mistakes. Without a correct certificate you can&apos;t set
                     up, and there&apos;s no refund.
                   </p>
+                  {settings.contact_email && (
+                    <p className="m-0">
+                      <strong className="text-cream">Send insurance proof and any other forms to</strong>{" "}
+                      <a href={`mailto:${settings.contact_email}`} className="font-bold text-gold">
+                        {settings.contact_email}
+                      </a>
+                      {settings.contact_address && `, or by mail to ${settings.contact_address}`}.
+                    </p>
+                  )}
                 </InfoPanel>
 
                 <InfoPanel title="How it works">

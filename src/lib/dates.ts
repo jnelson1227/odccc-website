@@ -60,6 +60,20 @@ const day = (d: Date) => d.getUTCDate();
 
 export type EventRange = { start: Date; end: Date };
 
+const SETUP_DAY = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+
+/** Vendors and carvers set up the day before the event opens: "Wednesday, June 16". */
+export function setupDayLabel(range: EventRange): string {
+  const setup = new Date(range.start);
+  setup.setUTCDate(setup.getUTCDate() - 1);
+  return SETUP_DAY.format(setup);
+}
+
 /**
  * Resolve the dates for a year, honouring a settings override when both
  * override dates are present.

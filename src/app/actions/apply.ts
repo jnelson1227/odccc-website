@@ -251,6 +251,23 @@ export async function applyAsCarver(
     ? Math.min(10, Math.max(1, Number.parseInt(field(form, "selling_spaces", 4), 10) || 1))
     : null;
 
+  // The selling space is the printed form's own little vendor application, so
+  // it carries its own required answers — but only when they've asked for one.
+  const sellsOther = field(form, "sells_other_items", 3);
+  const payment = field(form, "selling_payment_method", 10);
+  const sellingSignature = field(form, "selling_signature_name", 120);
+  if (wantsSelling) {
+    if (sellsOther !== "yes" && sellsOther !== "no") {
+      return fail("Tell us whether you plan to sell anything other than carvings.");
+    }
+    if (payment !== "check" && payment !== "card" && payment !== "cash") {
+      return fail("Choose how you'll pay for the selling space.");
+    }
+    if (sellingSignature.length < 3) {
+      return fail("Type your full name to sign for the selling space.");
+    }
+  }
+
   if (rateLimited(await clientIp())) {
     return fail("That's several applications in a short time. Give it a few minutes.");
   }
@@ -272,10 +289,17 @@ export async function applyAsCarver(
     wants_selling_space: wantsSelling,
     selling_business_name: wantsSelling ? optional(form, "selling_business_name", 150) : null,
     selling_spaces: sellingSpaces,
-    selling_other_items: wantsSelling ? optional(form, "selling_other_items", 500) : null,
+    sells_other_items: wantsSelling && sellsOther === "yes",
+    selling_other_items:
+      wantsSelling && sellsOther === "yes" ? optional(form, "selling_other_items", 500) : null,
     selling_fee_total: wantsSelling
       ? carverSellingFee(settings.carver_selling_space_fee, sellingSpaces ?? 0)
       : null,
+    selling_payment_method: wantsSelling ? payment : null,
+    selling_check_number:
+      wantsSelling && payment === "check" ? optional(form, "selling_check_number", 40) : null,
+    selling_signature_name: wantsSelling ? sellingSignature : null,
+    selling_signed_at: wantsSelling ? new Date().toISOString() : null,
   });
 
   if (error) {

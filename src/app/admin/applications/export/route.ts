@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { APPLICATION_STATUSES } from "@/lib/applications";
+import { APPLICATION_STATUSES, paymentMethodLabel } from "@/lib/applications";
 import { imageUrl } from "@/lib/images";
 import type { ApplicationStatus, CarverApplication, VendorApplication } from "@/lib/types";
 
@@ -107,6 +107,9 @@ function carverRows(rows: CarverApplication[]) {
       "Selling Spaces",
       "Selling Other Items",
       "Selling Fee",
+      "Selling Payment",
+      "Selling Check #",
+      "Selling Signed By",
       "Committee Notes",
     ],
     body: rows.map((r) => [
@@ -130,8 +133,11 @@ function carverRows(rows: CarverApplication[]) {
       photoUrls(r.photo_paths),
       r.selling_business_name ?? "",
       r.selling_spaces == null ? "" : String(r.selling_spaces),
-      r.selling_other_items ?? "",
+      r.wants_selling_space ? (r.sells_other_items ? `Yes — ${r.selling_other_items ?? ""}` : "No") : "",
       r.selling_fee_total == null ? "" : String(r.selling_fee_total),
+      r.selling_payment_method ? paymentMethodLabel(r.selling_payment_method) : "",
+      r.selling_check_number ?? "",
+      r.selling_signature_name ?? "",
       r.admin_notes ?? "",
     ]),
   };

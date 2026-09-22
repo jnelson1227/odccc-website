@@ -5,6 +5,7 @@ import PageHeader from "@/components/site/PageHeader";
 import SiteNav from "@/components/site/SiteNav";
 import { InfoPanel } from "@/components/site/form";
 import { money } from "@/lib/applications";
+import { setupDayLabel } from "@/lib/dates";
 import { getEventContext } from "@/lib/queries";
 import CarverApplicationForm from "./CarverApplicationForm";
 
@@ -35,7 +36,8 @@ const FAQ = [
 ];
 
 export default async function CarverApplicationPage() {
-  const { rangeLabel, passesHref, settings, year, editionLabel } = await getEventContext();
+  const { rangeLabel, passesHref, settings, year, editionLabel, dates } = await getEventContext();
+  const setupLabel = setupDayLabel(dates);
   const open = settings.carver_applications_open;
   const deadline = settings.application_deadline?.trim();
 
@@ -105,6 +107,15 @@ export default async function CarverApplicationPage() {
                     </Link>
                     .
                   </p>
+                  {settings.contact_email && (
+                    <p className="m-0">
+                      Paperwork, a longer bio or questions can go to{" "}
+                      <a href={`mailto:${settings.contact_email}`} className="font-bold text-gold">
+                        {settings.contact_email}
+                      </a>
+                      .
+                    </p>
+                  )}
                 </InfoPanel>
               </div>
 
@@ -134,7 +145,10 @@ export default async function CarverApplicationPage() {
                 <CarverApplicationForm
                   year={year}
                   sellingSpaceFee={settings.carver_selling_space_fee}
+                  setupLabel={setupLabel}
                   contactEmail={settings.contact_email}
+                  contactPhone={settings.contact_phone}
+                  contactAddress={settings.contact_address}
                 />
               </div>
             </section>

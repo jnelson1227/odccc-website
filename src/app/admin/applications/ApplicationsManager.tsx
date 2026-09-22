@@ -20,7 +20,7 @@ import {
   saveApplicationNotes,
   setApplicationStatus,
 } from "@/lib/actions/applications";
-import { APPLICATION_STATUSES, money } from "@/lib/applications";
+import { APPLICATION_STATUSES, money, paymentMethodLabel } from "@/lib/applications";
 import { imageUrl } from "@/lib/images";
 import type { ApplicationStatus, CarverApplication, VendorApplication } from "@/lib/types";
 
@@ -378,7 +378,17 @@ function CarverDetail({ row }: { row: CarverApplication }) {
               {row.selling_spaces} — {money(row.selling_fee_total ?? 0)} due
             </Detail>
             <Detail label="Other items">
-              {row.selling_other_items ?? "Carvings only"}
+              {row.sells_other_items
+                ? `Yes — ${row.selling_other_items ?? "not specified"} (needs the regular vendor application)`
+                : "Carvings only"}
+            </Detail>
+            <Detail label="Paying by">
+              {paymentMethodLabel(row.selling_payment_method)}
+              {row.selling_check_number && ` — #${row.selling_check_number}`}
+            </Detail>
+            <Detail label="Signed">
+              {row.selling_signature_name ?? "—"}
+              {row.selling_signed_at && `, ${DATE.format(new Date(row.selling_signed_at))}`}
             </Detail>
           </Section>
         )}

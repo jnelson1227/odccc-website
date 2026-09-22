@@ -14,6 +14,7 @@ import type {
   ApplicationStatus,
   BoothType,
   QuickCarveComfort,
+  SellingPaymentMethod,
   Settings,
   ShirtSize,
   WorkersComp,
@@ -65,6 +66,18 @@ export const WORKERS_COMP_OPTIONS: { value: WorkersComp; label: string }[] = [
     label: "Subject workers WILL be employed to perform labor at this event",
   },
 ];
+
+/** The three ways the carver form lets a selling space be paid for. */
+export const SELLING_PAYMENT_METHODS: { value: SellingPaymentMethod; label: string }[] = [
+  { value: "check", label: "Check or money order, by mail" },
+  { value: "card", label: "Card — I'll call the Chamber (3% processing fee)" },
+  { value: "cash", label: "Cash when I arrive, arranged with the Chamber ahead of time" },
+];
+
+export function paymentMethodLabel(method: SellingPaymentMethod | null): string {
+  if (!method) return "—";
+  return SELLING_PAYMENT_METHODS.find((m) => m.value === method)?.label ?? method;
+}
 
 /**
  * Only food vendors pay for electricity, and only food vendors are required to

@@ -16,6 +16,8 @@ export type BoothType = "Food" | "Craft" | "Collectible" | "Commercial" | "Non-P
 export type ShirtSize = "Small" | "Med" | "Lrg" | "XL" | "2XL" | "3XL" | "4XL";
 export type QuickCarveComfort = "Very" | "Somewhat" | "Not at all";
 export type WorkersComp = "no-employees" | "has-employees";
+/** How a carver intends to pay for a selling space, per the printed form. */
+export type SellingPaymentMethod = "check" | "card" | "cash";
 
 export type Settings = {
   id: number;
@@ -194,8 +196,15 @@ export type CarverApplication = {
   wants_selling_space: boolean;
   selling_business_name: string | null;
   selling_spaces: number | null;
+  /** "Are you planning to sell any items other than carvings?" */
+  sells_other_items: boolean;
   selling_other_items: string | null;
   selling_fee_total: number | null;
+  selling_payment_method: SellingPaymentMethod | null;
+  selling_check_number: string | null;
+  /** The "Authorized Signature" line, typed. */
+  selling_signature_name: string | null;
+  selling_signed_at: string | null;
   status: ApplicationStatus;
   admin_notes: string | null;
   created_at: string;

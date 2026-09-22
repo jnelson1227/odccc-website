@@ -18,6 +18,7 @@ import {
 import {
   DIVISIONS,
   QUICK_CARVE_COMFORT,
+  SELLING_PAYMENT_METHODS,
   SHIRT_SIZES,
   carverSellingFee,
   money,
@@ -27,15 +28,24 @@ import { IDLE } from "@/lib/actions/state";
 export default function CarverApplicationForm({
   year,
   sellingSpaceFee,
+  setupLabel,
   contactEmail,
+  contactPhone,
+  contactAddress,
 }: {
   year: number;
   sellingSpaceFee: number;
+  /** "Wednesday, June 16" — the day before the event opens. */
+  setupLabel: string;
   contactEmail: string | null;
+  contactPhone: string | null;
+  contactAddress: string | null;
 }) {
   const [state, formAction] = useActionState(applyAsCarver, IDLE);
   const [wantsSelling, setWantsSelling] = useState(false);
   const [sellingSpaces, setSellingSpaces] = useState(1);
+  const [sellsOther, setSellsOther] = useState(false);
+  const [payment, setPayment] = useState<string>("");
 
   if (state.status === "success") {
     return (
@@ -149,18 +159,45 @@ export default function CarverApplicationForm({
         <CheckboxField
           name="wants_selling_space"
           label={`Yes, I'd like a 10' x 12' selling space for my carvings`}
-          hint={`${money(sellingSpaceFee)} per space. Set up is the Wednesday before the event. Space is not reserved until it is paid for in full.`}
+          hint={`${money(sellingSpaceFee)} per space. There is no charge to carve — this fee is for the selling space only.`}
           onChange={setWantsSelling}
         />
 
         {wantsSelling && (
-          <div className="flex flex-col gap-4 border-l-4 border-gold bg-fir-850 px-5 py-5 md:px-6">
+          <div className="flex flex-col gap-6 border-l-4 border-gold bg-fir-850 px-5 py-6 md:px-7">
+            <div className="flex flex-col gap-3 text-[16px] leading-[1.6] text-body">
+              <h3 className="display m-0 text-[22px] font-black text-cream">
+                Fee schedule and information
+              </h3>
+              <ul className="m-0 flex list-none flex-col gap-2 p-0">
+                <Rule>
+                  <strong className="text-cream">Booth size:</strong> 10&apos; selling front x 12&apos;
+                  deep, near your carving booth. <strong className="text-cream">Cost:</strong>{" "}
+                  {money(sellingSpaceFee)} for each 10&apos; storefront.
+                </Rule>
+                <Rule>
+                  <strong className="text-cream">Set-up:</strong> {setupLabel}, 10 a.m. to 6 p.m.
+                </Rule>
+                <Rule>
+                  10&apos; is the total length of your space. If any part of your booth goes over —
+                  including the full length of a trailer and its tongue — you need another space.
+                </Rule>
+                <Rule>
+                  Selling space is <strong className="text-cream">not guaranteed until paid in
+                  full</strong>, and you may not set up until it is paid for or other arrangements
+                  have been made with the Chainsaw Committee.
+                </Rule>
+                <Rule>
+                  <strong className="text-cream">No refunds.</strong> Spaces are reserved only after
+                  the application and full payment have been received and approved by the Chainsaw
+                  Committee.
+                </Rule>
+              </ul>
+            </div>
+
             <TextField name="selling_business_name" label="Business name" maxLength={150} />
-            <Labelled
-              label="Number of spaces"
-              required
-              hint={`10' is the total length of your space, including the full length of a trailer and its tongue. If any part of your booth goes over, you need another space.`}
-            >
+
+            <Labelled label="Number of 10' x 12' spaces" required>
               {(id, describedBy) => (
                 <select
                   id={id}
@@ -178,21 +215,80 @@ export default function CarverApplicationForm({
                 </select>
               )}
             </Labelled>
-            <TextField
-              name="selling_other_items"
-              label="Are you planning to sell anything other than carvings?"
-              maxLength={500}
-              placeholder="Leave blank if it's carvings only"
-              hint="If yes, you'll need the regular vendor application instead — the Chamber will send it to you."
+
+            <RadioRow
+              name="sells_other_items"
+              legend="Are you planning to sell any items other than carvings?"
+              options={[
+                { value: "no", label: "No — carvings only" },
+                { value: "yes", label: "Yes" },
+              ]}
+              required
+              onChange={(value) => setSellsOther(value === "yes")}
             />
-            <p className="m-0 text-[17px] font-bold text-gold">
+            {sellsOther && (
+              <TextField
+                name="selling_other_items"
+                label="What else will you sell?"
+                required
+                maxLength={500}
+                hint="This space is for carvings only. To sell anything else you must also complete the regular vendor application — the Chamber will follow up with you."
+              />
+            )}
+
+            <p className="m-0 text-[20px] font-bold text-gold">
               Selling space total: {money(carverSellingFee(sellingSpaceFee, sellingSpaces))}
+              <span className="block text-[14px] font-normal text-sub">
+                {sellingSpaces} space{sellingSpaces === 1 ? "" : "s"} x {money(sellingSpaceFee)}
+              </span>
             </p>
-            <p className="m-0 text-[14px] leading-[1.55] text-sub">
-              There is no charge to carve. This fee is for the selling space only. Pay by check or
-              money order to the Reedsport/Winchester Bay Chamber of Commerce, or call 541-271-3495
-              to pay by card — card payments carry a 3% processing fee. There are no refunds.
-            </p>
+
+            <RadioRow
+              name="selling_payment_method"
+              legend="How will you pay?"
+              hint={`Checks and money orders are payable to the Reedsport/Winchester Bay Chamber of Commerce${contactAddress ? `, ${contactAddress}` : ""}. Please do not send cash.`}
+              options={SELLING_PAYMENT_METHODS}
+              required
+              onChange={setPayment}
+            />
+            {payment === "check" && (
+              <TextField
+                name="selling_check_number"
+                label="Check or money order number, if you have it"
+                maxLength={40}
+              />
+            )}
+            {payment === "card" && (
+              <p className="m-0 text-[15px] leading-[1.55] text-body">
+                Call the Chamber at {contactPhone ?? "541-271-3495"} to pay by card. Card payments
+                carry a 3% processing fee.
+              </p>
+            )}
+            {payment === "cash" && (
+              <p className="m-0 text-[15px] leading-[1.55] text-body">
+                Please call the Chamber at {contactPhone ?? "541-271-3495"} before the event to
+                arrange paying in cash when you arrive.
+              </p>
+            )}
+
+            <TextField
+              name="selling_signature_name"
+              label="Authorized signature — type your full name"
+              required
+              maxLength={120}
+              autoComplete="name"
+              hint="Typing your name here has the same effect as signing the selling space application."
+            />
+
+            {contactEmail && (
+              <p className="m-0 text-[14px] leading-[1.55] text-sub">
+                Questions, or paperwork to send along? Email{" "}
+                <a href={`mailto:${contactEmail}`} className="font-bold text-gold">
+                  {contactEmail}
+                </a>
+                {contactPhone && ` or call ${contactPhone}`}.
+              </p>
+            )}
           </div>
         )}
       </Fieldset>
@@ -212,6 +308,15 @@ export default function CarverApplicationForm({
         </p>
       </div>
     </form>
+  );
+}
+
+function Rule({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex gap-3">
+      <span aria-hidden="true" className="mt-[11px] h-[6px] w-[6px] shrink-0 bg-gold" />
+      <span>{children}</span>
+    </li>
   );
 }
 
