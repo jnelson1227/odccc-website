@@ -3,7 +3,7 @@ begin;
 insert into public.admins (email, role) values ('jill@highwater.cafe','owner');
 insert into public.settings (id, event_year, hero_para1, hero_para2) values (1, 2027, '**30+ world-class carvers** from across the U.S., Canada, the U.K. and beyond turn raw Oregon timber into art — live, on Reedsport''s waterfront.', '**Now in its 27th year,** the Oregon Divisional Chainsaw Carving Championship fills four days with live demonstrations, daily Quick Carve contests and auctions, food, vendors and more.');
 
--- Carvers (2026 field). photo_path points at /public/images/carvers seed photos.
+-- Carvers (2026 field). Photo paths point at /public/images/carvers seed photos.
 insert into public.carvers (slug,name,hometown,country,division,card_line,honor_badge,photo_path,photo_alt) values ('adrian-bois','Adrian Bois','Argentina','Argentina','Pro','Award-winning carver with international experience',null,null,null);
 insert into public.carvers (slug,name,hometown,country,division,card_line,honor_badge,photo_path,photo_alt) values ('alex-pricob','Alex Pricob','Renton, WA','USA','Pro','Full-time carver since 2014, originally from Moldova',null,'/images/carvers/alex-pricob.jpg','Sculpture by Alex Pricob');
 insert into public.carvers (slug,name,hometown,country,division,card_line,honor_badge,photo_path,photo_alt) values ('andy-walser','Andy Walser','Puyallup, WA','USA','Pro','Traditional artist; promoted from Semi-Pro in 2025',null,'/images/carvers/andy-walser.jpg','Sculpture by Andy Walser');
@@ -42,6 +42,50 @@ insert into public.carvers (slug,name,hometown,country,division,card_line,honor_
 insert into public.carvers (slug,name,hometown,country,division,card_line,honor_badge,photo_path,photo_alt) values ('riley-knaus','Riley Knaus','Coos Bay, OR','USA','Semi-Pro','Detail, style and artistic expression',null,null,null);
 insert into public.carvers (slug,name,hometown,country,division,card_line,honor_badge,photo_path,photo_alt) values ('terry-moss','Terry Moss','Turner, OR','USA','Semi-Pro','From miniature caricatures to big logs',null,null,null);
 insert into public.carvers (slug,name,hometown,country,division,card_line,honor_badge,photo_path,photo_alt) values ('zane-wehmeyer','Zane Wehmeyer','Kansas City, MO','USA','Semi-Pro','Realism and naturalistic detail',null,'/images/carvers/zane-wehmeyer.jpg','Sculpture by Zane Wehmeyer');
+-- Photos the carvers sent in. These lead the Carvers grid; photo_path above
+-- is the sculpture each of them competed with, shown on their own page.
+update public.carvers as c set portrait_path = v.path, portrait_alt = v.alt from (values
+  ('adonijah-stanton','/images/carvers/portraits/adonijah-stanton.jpg','Adonijah Stanton carving a bird sculpture outdoors')
+  ,('adrian-bois','/images/carvers/portraits/adrian-bois.jpg','Adrian Bois beside his carved mountain lion on a driftwood base')
+  ,('alex-pricob','/images/carvers/portraits/alex-pricob.jpg','Alex Pricob with a companion in front of carved eagles and a bear')
+  ,('andy-walser','/images/carvers/portraits/andy-walser.jpg','Andy Walser beside a bright orange carved octopus')
+  ,('anthony-robinson','/images/carvers/portraits/anthony-robinson.jpg','Anthony Robinson beside a carved figure in a feathered headdress')
+  ,('bill-baker','/images/carvers/portraits/bill-baker.jpg','Bill Baker and others beside a carved bear topped with a peacock')
+  ,('bob-king','/images/carvers/portraits/bob-king.jpg','Bob King behind a large carved eagle with outstretched wings')
+  ,('brian-vorwaller','/images/carvers/portraits/brian-vorwaller.jpg','Brian Vorwaller beside a tall carving of standing bears and totem figures')
+  ,('brittny-hughes','/images/carvers/portraits/brittny-hughes.jpg','Brittny Hughes holding a chainsaw beside a carved sea otter')
+  ,('chad-kilpatrick','/images/carvers/portraits/chad-kilpatrick.jpg','Chad Kilpatrick beside a carved totem pole of stacked bears and eagles')
+  ,('chris-foltz','/images/carvers/portraits/chris-foltz.jpg','Chris Foltz seated beside a large pale carved lion')
+  ,('colby-herrington','/images/carvers/portraits/colby-herrington.jpg','Colby Herrington beside a carved tree of bears and eagles marked Sold')
+  ,('constantin-morari','/images/carvers/portraits/constantin-morari.jpg','Constantin Morari at work behind a carved horse leaping a rail fence')
+  ,('denny-henson','/images/carvers/portraits/denny-henson.jpg','Denny Henson cutting into a carving with a chainsaw, sawdust flying')
+  ,('derek-richardson','/images/carvers/portraits/derek-richardson.jpg','Derek Richardson beside a carved cowboy tipping his hat')
+  ,('derrick-stanton','/images/carvers/portraits/derrick-stanton.jpg','A carved stack of a rooster, goat, pig and shaggy cow')
+  ,('dylan-ezell','/images/carvers/portraits/dylan-ezell.jpg','Dylan Ezell with a companion beside a carved eagle with spread wings')
+  ,('gregory-hood','/images/carvers/portraits/gregory-hood.jpg','Gregory Hood beside a tall carved standing figure under a canopy')
+  ,('ian-rakestraw','/images/carvers/portraits/ian-rakestraw.jpg','Ian Rakestraw beside a carved standing bear in a garden')
+  ,('jacob-lucas','/images/carvers/portraits/jacob-lucas.jpg','Jacob Lucas beside a tall carved totem of stacked faces')
+  ,('jake-hudson','/images/carvers/portraits/jake-hudson.jpg','A carved hawk perched on a log')
+  ,('jason-alger','/images/carvers/portraits/jason-alger.jpg','Jason Alger smiling beside a carving in progress')
+  ,('jason-murieen','/images/carvers/portraits/jason-murieen.jpg','Jason Murieen between two carved lion sculptures on log bases')
+  ,('jeff-coss','/images/carvers/portraits/jeff-coss.jpg','Jeff Coss beside a carved snowman in a top hat and scarf')
+  ,('katrina-dressler','/images/carvers/portraits/katrina-dressler.jpg','Katrina Dressler beside a carved tree with a red macaw')
+  ,('kyle-christopherson','/images/carvers/portraits/kyle-christopherson.jpg','Kyle Christopherson behind a carved eagle with raised wings at his booth')
+  ,('mark-colp','/images/carvers/portraits/mark-colp.jpg','Mark Colp beside a carved cougar prowling on a stump')
+  ,('nate-hall','/images/carvers/portraits/nate-hall.jpg','Nate Hall in a cap and sunglasses, a carving behind him')
+  ,('nick-bielby','/images/carvers/portraits/nick-bielby.jpg','Nick Bielby beside a large carved angel with spread wings')
+  ,('patrick-barrigar','/images/carvers/portraits/patrick-barrigar.jpg','Patrick Barrigar beside a carved Bigfoot figure holding a flag')
+  ,('rachael-mirth','/images/carvers/portraits/rachael-mirth.jpg','Rachael Mirth beside a tall carved marlin')
+  ,('riley-knaus','/images/carvers/portraits/riley-knaus.jpg','Riley Knaus beside a tall dark carving under a canopy')
+  ,('ryan-anderson','/images/carvers/portraits/ryan-anderson.jpg','Ryan Anderson with another carver beside a large carved sailfish')
+  ,('shane-green','/images/carvers/portraits/shane-green.jpg','Shane Green beside a carved totem of owls and a rabbit')
+  ,('steven-higgins','/images/carvers/portraits/steven-higgins.jpg','Steven Higgins beside a carved bearded green man face')
+  ,('terry-moss','/images/carvers/portraits/terry-moss.jpg','Terry Moss beside a carved miner figure in a wide hat')
+  ,('tyler-welfing','/images/carvers/portraits/tyler-welfing.jpg','Tyler Welfing beside a carved bison with an owl above it')
+  ,('zane-wehmeyer','/images/carvers/portraits/zane-wehmeyer.jpg','Zane Wehmeyer carving a swirling abstract sculpture in a shop')
+) as v(slug, path, alt) where c.slug = v.slug;
+
+
 insert into public.carver_years (carver_id, year, status) select id, 2026, 'Confirmed' from public.carvers;
 insert into public.carver_years (carver_id, year, status) select id, 2027, 'Invited' from public.carvers;
 update public.settings set featured_carver_ids = array(select id from public.carvers where slug in ('colby-herrington','rachael-mirth','ryan-anderson','bob-king','bill-baker','jacob-lucas') order by array_position(array['colby-herrington','rachael-mirth','ryan-anderson','bob-king','bill-baker','jacob-lucas']::text[], slug));

@@ -60,8 +60,12 @@ export type Carver = {
   card_line: string | null;
   bio: string | null;
   honor_badge: string | null;
+  /** The sculpture the carver competed with. */
   photo_path: string | null;
   photo_alt: string | null;
+  /** The photo of the carver themselves, as they submitted it. */
+  portrait_path: string | null;
+  portrait_alt: string | null;
   created_at: string;
   updated_at: string;
 };

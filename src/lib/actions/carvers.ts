@@ -40,7 +40,9 @@ export async function saveCarver(_prev: ActionState, form: FormData): Promise<Ac
 
   const photoPath = text(form, "photo_path");
   const photoAlt = text(form, "photo_alt");
-  if (photoPath && !photoAlt) {
+  const portraitPath = text(form, "portrait_path");
+  const portraitAlt = text(form, "portrait_alt");
+  if ((photoPath && !photoAlt) || (portraitPath && !portraitAlt)) {
     return failed("Every photo needs alt text describing what it shows.");
   }
 
@@ -66,6 +68,8 @@ export async function saveCarver(_prev: ActionState, form: FormData): Promise<Ac
     photo_path: photoPath,
     // Alt text without a photo is meaningless, so drop it with the photo.
     photo_alt: photoPath ? photoAlt : null,
+    portrait_path: portraitPath,
+    portrait_alt: portraitPath ? portraitAlt : null,
   };
 
   let carverId = id;

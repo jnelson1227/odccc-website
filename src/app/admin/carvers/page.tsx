@@ -44,6 +44,8 @@ export default async function CarversAdminPage() {
     honor_badge: carver.honor_badge,
     photo_path: carver.photo_path,
     photo_alt: carver.photo_alt,
+    portrait_path: carver.portrait_path,
+    portrait_alt: carver.portrait_alt,
     status: statusByCarver.get(carver.id) ?? null,
     featured: featured.has(carver.id),
   }));

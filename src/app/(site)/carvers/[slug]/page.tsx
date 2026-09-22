@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import NewsletterBand from "@/components/site/NewsletterBand";
 import SiteNav from "@/components/site/SiteNav";
+import { imageDimensions } from "@/lib/image-size";
 import { imageUrl, initials } from "@/lib/images";
 import { ordinal } from "@/lib/dates";
 import { getAllCarverSlugs, getCarverBySlug, getEventContext } from "@/lib/queries";
@@ -46,12 +47,25 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
   const [carver, ctx] = await Promise.all([getCarverBySlug(slug), getEventContext()]);
   if (!carver) notFound();
 
-  const photo = imageUrl(carver.photo_path);
-  const appearances = carver.years
-    .filter((y) => y.status !== "Not attending")
-    .map((y) => y.year)
-    .sort((a, b) => b - a);
+  const portrait = imageUrl(carver.portrait_path);
+  const sculpture = imageUrl(carver.photo_path);
   const thisYear = carver.years.find((y) => y.year === ctx.year);
+
+  // Show each photo the shape it was taken — a sculpture shot wide shouldn't be
+  // cropped into a portrait frame. 3:4 is only the fallback for a photo whose
+  // size we couldn't read.
+  const [portraitSize, sculptureSize] = await Promise.all([
+    imageDimensions(portrait),
+    imageDimensions(sculpture),
+  ]);
+  const ratio = (size: { width: number; height: number } | null) =>
+    size ? `${size.width} / ${size.height}` : "3 / 4";
+
+  // The sculpture photo is from the most recently carved field, which is the
+  // same year /carvers shows — this year's, unless the lineup is still last
+  // year's because the new one hasn't been announced.
+  const carvingYear =
+    ctx.settings.carvers_page_mode === "previous" ? ctx.year - 1 : ctx.year;
 
   return (
     <>
@@ -66,25 +80,54 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
         </Link>
 
         <article className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
-          <div className="relative aspect-3/4 w-full max-w-[420px]">
-            {photo ? (
-              <Image
-                src={photo}
-                alt={carver.photo_alt ?? `Sculpture by ${carver.name}`}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 420px"
-                className="border-2 border-line object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-line bg-fir-850">
-                <span aria-hidden="true" className="display text-[96px] font-black text-placeholder">
-                  {initials(carver.name)}
-                </span>
-                <span className="text-[12px] uppercase tracking-[1.5px] text-sub">
-                  Photo coming
-                </span>
-              </div>
+          {/* The carver first, then the sculpture they competed with. A carver
+              with only one of the two gets that one, at full size. */}
+          <div className="flex w-full max-w-[420px] flex-col gap-6">
+            <div
+              className="relative w-full"
+              style={{ aspectRatio: ratio(portrait ? portraitSize : sculptureSize) }}
+            >
+              {portrait ?? sculpture ? (
+                <Image
+                  src={(portrait ?? sculpture)!}
+                  alt={
+                    portrait
+                      ? (carver.portrait_alt ?? carver.name)
+                      : (carver.photo_alt ?? `Sculpture by ${carver.name}`)
+                  }
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 420px"
+                  className="border-2 border-line object-cover object-center"
+                />
+              ) : (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-line bg-fir-850">
+                  <span
+                    aria-hidden="true"
+                    className="display text-[96px] font-black text-placeholder"
+                  >
+                    {initials(carver.name)}
+                  </span>
+                  <span className="text-[12px] uppercase tracking-[1.5px] text-sub">
+                    Photo coming
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {portrait && sculpture && (
+              <figure className="m-0 flex flex-col gap-3">
+                <div className="relative w-full" style={{ aspectRatio: ratio(sculptureSize) }}>
+                  <Image
+                    src={sculpture}
+                    alt={carver.photo_alt ?? `Sculpture by ${carver.name}`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 420px"
+                    className="border-2 border-line object-cover"
+                  />
+                </div>
+                <figcaption className="eyebrow">{carvingYear} carving</figcaption>
+              </figure>
             )}
           </div>
 
@@ -158,13 +201,9 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
                   </Detail>
                 );
               })}
-              {appearances.length > 0 && (
-                <Detail label="At the championship">
-                  {appearances.length === 1
-                    ? appearances[0]
-                    : `${appearances.length} years — ${appearances.join(", ")}`}
-                </Detail>
-              )}
+              {/* No "years at the championship" line: carver_years only goes
+                  back to 2026, so it would undercount everyone who has been
+                  coming for years. */}
             </dl>
 
             {carver.honors.length > 0 && (

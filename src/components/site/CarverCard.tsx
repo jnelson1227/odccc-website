@@ -6,9 +6,13 @@ import type { Carver } from "@/lib/types";
 type Variant = "home" | "grid";
 
 /**
- * 3:4 sculpture photo with a 2px line border, an optional gold honor badge,
- * the carver's name, hometown and one-line card line. Carvers without a photo
- * get an initials placeholder rather than a broken image.
+ * A carver photo with a 2px line border, an optional gold honor badge, the
+ * carver's name, hometown and one-line card line. Carvers without a photo get
+ * an initials placeholder rather than a broken image.
+ *
+ * The Carvers grid leads with the portrait the carver submitted, in a tall 2:3
+ * frame that suits a person standing beside their work; the homepage row keeps
+ * the sculpture, as in design-reference/Home.dc.html.
  */
 export default function CarverCard({
   carver,
@@ -19,24 +23,37 @@ export default function CarverCard({
   variant?: Variant;
   priority?: boolean;
 }) {
-  const src = imageUrl(carver.photo_path);
   const isHome = variant === "home";
-  const height = isHome ? "h-[220px] sm:h-[260px] lg:h-[300px]" : "h-[220px] sm:h-[250px] lg:h-[280px]";
+
+  // A carver with no portrait falls back to their sculpture, so the grid never
+  // goes to the initials placeholder while a usable photo exists.
+  const portrait = !isHome && carver.portrait_path;
+  const src = imageUrl(portrait ? carver.portrait_path : carver.photo_path);
+  const alt = portrait
+    ? (carver.portrait_alt ?? carver.name)
+    : (carver.photo_alt ?? `Sculpture by ${carver.name}`);
+
+  const frame = isHome
+    ? "h-[220px] sm:h-[260px] lg:h-[300px]"
+    : "aspect-2/3";
 
   return (
     <Link
       href={`/carvers/${carver.slug}`}
       className="group flex flex-col gap-3 text-cream no-underline"
     >
-      <div className={`relative w-full ${height}`}>
+      <div className={`relative w-full ${frame}`}>
         {src ? (
           <Image
             src={src}
-            alt={carver.photo_alt ?? `Sculpture by ${carver.name}`}
+            alt={alt}
             fill
             priority={priority}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-            className="border-2 border-line object-cover transition-[border-color] group-hover:border-gold"
+            // Centred rather than top-anchored: in these photos the carver
+            // stands beside work that is often taller than they are, so their
+            // face lands anywhere from the top third to the middle.
+            className="border-2 border-line object-cover object-center transition-[border-color] group-hover:border-gold"
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-line bg-fir-850 transition-[border-color] group-hover:border-gold">

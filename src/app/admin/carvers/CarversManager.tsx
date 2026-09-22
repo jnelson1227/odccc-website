@@ -35,6 +35,8 @@ export type CarverRow = {
   honor_badge: string | null;
   photo_path: string | null;
   photo_alt: string | null;
+  portrait_path: string | null;
+  portrait_alt: string | null;
   status: CarverStatus | null;
   featured: boolean;
 };
@@ -227,16 +229,28 @@ function CarverEditor({
         {carver && <input type="hidden" name="id" value={carver.id} />}
         <input type="hidden" name="year" value={year} />
 
-        <ImageUpload
-          name="photo_path"
-          altName="photo_alt"
-          initialPath={carver?.photo_path}
-          initialAlt={carver?.photo_alt}
-          label="Photo"
-          hint="Portrait photos work best (3:4). Under 5 MB."
-          requireAlt
-          folder="carvers"
-        />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ImageUpload
+            name="portrait_path"
+            altName="portrait_alt"
+            initialPath={carver?.portrait_path}
+            initialAlt={carver?.portrait_alt}
+            label="Photo of the carver"
+            hint="The one the carver sent in. This is the photo the Carvers page shows. Tall photos work best. Under 5 MB."
+            requireAlt
+            folder="carvers"
+          />
+          <ImageUpload
+            name="photo_path"
+            altName="photo_alt"
+            initialPath={carver?.photo_path}
+            initialAlt={carver?.photo_alt}
+            label="Their carving"
+            hint="The sculpture they competed with. Shown on the carver's own page. Under 5 MB."
+            requireAlt
+            folder="carvers"
+          />
+        </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="Name" htmlFor="carver-name">
@@ -412,7 +426,7 @@ function CarverEditor({
 }
 
 function Thumb({ carver }: { carver: CarverRow }) {
-  const src = imageUrl(carver.photo_path);
+  const src = imageUrl(carver.portrait_path ?? carver.photo_path);
   if (src) {
     return (
       <Image
