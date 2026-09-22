@@ -68,6 +68,22 @@ export function url(form: FormData, key: string): string | null {
   }
 }
 
+/** Keep slugs unique — two carvers can share a name. */
+export async function uniqueSlug(
+  supabase: { from: (table: string) => any }, // eslint-disable-line @typescript-eslint/no-explicit-any
+  base: string,
+): Promise<string> {
+  const root = base || "carver";
+  const { data } = await supabase.from("carvers").select("slug").like("slug", `${root}%`);
+  const taken = new Set(((data ?? []) as { slug: string }[]).map((r) => r.slug));
+
+  if (!taken.has(root)) return root;
+  for (let n = 2; n < 100; n++) {
+    if (!taken.has(`${root}-${n}`)) return `${root}-${n}`;
+  }
+  return `${root}-${Date.now()}`;
+}
+
 /** "Colby Herrington" → "colby-herrington". */
 export function slugify(input: string): string {
   return input

@@ -13,6 +13,7 @@
 import type {
   ApplicationStatus,
   BoothType,
+  Carver,
   QuickCarveComfort,
   SellingPaymentMethod,
   Settings,
@@ -157,6 +158,57 @@ export function vendorFee(
 export function carverSellingFee(ratePerSpace: number, spaces: number): number {
   const count = Math.max(0, Math.floor(spaces) || 0);
   return count * ratePerSpace;
+}
+
+// ---------------------------------------------------------------- accepting
+
+/** The fields of a carver profile the match list needs to show. */
+export type CarverSummary = Pick<Carver, "id" | "name" | "slug" | "hometown" | "division">;
+
+export type CarverMatch = {
+  carver: CarverSummary;
+  reason: "same name" | "same last name";
+};
+
+const normalise = (s: string) =>
+  s
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+/**
+ * Carvers an application might already be. A returning carver usually types
+ * their name the way it's already on the site, so an exact name match comes
+ * first; the same surname is offered next for "Bob King" vs "Robert King".
+ * Nothing is linked automatically — the committee confirms the match.
+ */
+export function matchCarvers(
+  application: { first_name: string; last_name: string },
+  carvers: CarverSummary[],
+): CarverMatch[] {
+  const full = normalise(`${application.first_name} ${application.last_name}`);
+  const last = normalise(application.last_name);
+  if (!last) return [];
+
+  const matches: CarverMatch[] = [];
+  for (const carver of carvers) {
+    const name = normalise(carver.name);
+    if (name === full) {
+      matches.push({ carver, reason: "same name" });
+    } else if (name.split(" ").pop() === last) {
+      matches.push({ carver, reason: "same last name" });
+    }
+  }
+  return matches.sort((a, b) =>
+    a.reason === b.reason ? a.carver.name.localeCompare(b.carver.name, "en") : a.reason === "same name" ? -1 : 1,
+  );
+}
+
+/** "Reedsport, OR" — the way carver hometowns read on the site. */
+export function hometownFrom(app: { city: string; state: string }): string {
+  return [app.city.trim(), app.state.trim()].filter(Boolean).join(", ");
 }
 
 /** 275 → "$275". Fees are always whole dollars on these forms. */

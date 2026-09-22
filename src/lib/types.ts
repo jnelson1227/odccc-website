@@ -65,6 +65,9 @@ export type Settings = {
   updated_at: string;
 };
 
+/** One extra work photo on a carver's page. Alt text is required on every photo. */
+export type CarverGalleryItem = { path: string; alt: string };
+
 export type Carver = {
   id: string;
   slug: string;
@@ -86,6 +89,8 @@ export type Carver = {
   /** The photo of the carver themselves, as they submitted it. */
   portrait_path: string | null;
   portrait_alt: string | null;
+  /** Work photos beyond the portrait and the carving — usually from their application. */
+  gallery: CarverGalleryItem[];
   created_at: string;
   updated_at: string;
 };
@@ -211,6 +216,9 @@ export type CarverApplication = {
   selling_signed_at: string | null;
   status: ApplicationStatus;
   admin_notes: string | null;
+  /** Set when accepted: the carver profile this application became or updated. */
+  carver_id: string | null;
+  accepted_at: string | null;
   created_at: string;
 };
 

@@ -31,6 +31,7 @@ Left sidebar (fir green): logo, "Site admin", nav — Event & homepage · Carver
 
 **Applications**
 - Carver / Vendor tabs with a "new" count, stats for the year, search, status and year filters, **Export CSV** (columns named to match the Chamber's Airtable carver table; photos excluded). Click a row for the whole application, the uploaded photos, a status select (New · Reviewed · Accepted · Waitlisted · Declined), committee notes and delete.
+- Each carver application has an **Accept for {year}** panel: pick the matching carver (same name suggested first, then same surname) or "New carver"; tick which fields to update on a returning carver (division, hometown, bio, website, Facebook, Instagram, TikTok); choose which photos come across, write alt text for each, and pick one as the carver photo. Accepting copies the photos into the carver's folder, saves the profile, marks them Confirmed for the year, links the application to the carver and flushes the site cache.
 - Whether each form is open, the deadline text and the fee schedule are set on Event & homepage → Applications. Closed forms show a "not open yet" note on the site.
 
 **Subscribers**

@@ -5,7 +5,7 @@ Schema: `supabase/migrations/0001_init.sql`. Starter content: `supabase/seed.sql
 | Table | Purpose |
 |---|---|
 | `settings` | A single row: event year, admission, hero copy, presenting-sponsor toggle, featured carvers, contact, links |
-| `carvers` | Carver profiles, which persist across years |
+| `carvers` | Carver profiles, which persist across years. `gallery` is a JSON array of `{path, alt}` work photos, usually carried over from an accepted application |
 | `carver_years` | Per-year participation status (Confirmed / Invited / Not attending) |
 | `sponsorship_levels` | Levels, prices, benefits, availability, display rules |
 | `sponsors` | Sponsors per year, with level and status. `legacy_level` holds 2026's old level names |

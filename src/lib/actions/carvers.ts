@@ -12,6 +12,7 @@ import {
   SAVED,
   slugify,
   text,
+  uniqueSlug,
   url,
   type ActionState,
 } from "./shared";
@@ -191,20 +192,4 @@ async function setFeatured(
   const next = featured ? [...current, carverId] : current.filter((id) => id !== carverId);
   const { error } = await supabase.from("settings").update({ featured_carver_ids: next }).eq("id", 1);
   return error ? error.message : null;
-}
-
-/** Keep slugs unique — two carvers can share a name. */
-async function uniqueSlug(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  base: string,
-): Promise<string> {
-  const root = base || "carver";
-  const { data } = await supabase.from("carvers").select("slug").like("slug", `${root}%`);
-  const taken = new Set((data ?? []).map((r) => r.slug as string));
-
-  if (!taken.has(root)) return root;
-  for (let n = 2; n < 100; n++) {
-    if (!taken.has(`${root}-${n}`)) return `${root}-${n}`;
-  }
-  return `${root}-${Date.now()}`;
 }

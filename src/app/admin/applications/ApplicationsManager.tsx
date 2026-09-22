@@ -23,7 +23,8 @@ import {
 import { APPLICATION_STATUSES, money, paymentMethodLabel } from "@/lib/applications";
 import { imageUrl } from "@/lib/images";
 import { SOCIAL_LABEL, socialLabel, socialUrl, type Social } from "@/lib/social";
-import type { ApplicationStatus, CarverApplication, VendorApplication } from "@/lib/types";
+import type { ApplicationStatus, Carver, CarverApplication, VendorApplication } from "@/lib/types";
+import AcceptPanel from "./AcceptPanel";
 
 type Kind = "carver" | "vendor";
 
@@ -49,12 +50,15 @@ export default function ApplicationsManager({
   open,
   carvers,
   vendors,
+  profiles,
 }: {
   kind: Kind;
   year: number;
   open: Record<Kind, boolean>;
   carvers: CarverApplication[];
   vendors: VendorApplication[];
+  /** The carver roster, for matching an application to someone already on the site. */
+  profiles: Carver[];
 }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<ApplicationStatus | "all">("all");
@@ -194,7 +198,7 @@ export default function ApplicationsManager({
             <tbody>
               {filtered.map((r) =>
                 kind === "carver" ? (
-                  <CarverRow key={r.id} row={r as CarverApplication} />
+                  <CarverRow key={r.id} row={r as CarverApplication} profiles={profiles} year={year} />
                 ) : (
                   <VendorRow key={r.id} row={r as VendorApplication} />
                 ),
@@ -225,7 +229,15 @@ export default function ApplicationsManager({
 
 // ------------------------------------------------------------------ rows
 
-function CarverRow({ row }: { row: CarverApplication }) {
+function CarverRow({
+  row,
+  profiles,
+  year,
+}: {
+  row: CarverApplication;
+  profiles: Carver[];
+  year: number;
+}) {
   const [openRow, setOpenRow] = useState(false);
   return (
     <>
@@ -274,7 +286,7 @@ function CarverRow({ row }: { row: CarverApplication }) {
       {openRow && (
         <tr>
           <td colSpan={7} className="border-b border-admin-rule bg-admin-tint px-3 py-5">
-            <CarverDetail row={row} />
+            <CarverDetail row={row} profiles={profiles} year={year} />
           </td>
         </tr>
       )}
@@ -342,9 +354,17 @@ function VendorRow({ row }: { row: VendorApplication }) {
 
 // --------------------------------------------------------------- details
 
-function CarverDetail({ row }: { row: CarverApplication }) {
+function CarverDetail({
+  row,
+  profiles,
+  year,
+}: {
+  row: CarverApplication;
+  profiles: Carver[];
+  year: number;
+}) {
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_320px]">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px]">
       <div className="flex flex-col gap-5">
         <Section title="Contact">
           <Detail label="Mailing address">
@@ -432,7 +452,10 @@ function CarverDetail({ row }: { row: CarverApplication }) {
         </Section>
       </div>
 
-      <Review kind="carver" id={row.id} status={row.status} notes={row.admin_notes} />
+      <div className="flex flex-col gap-4">
+        <AcceptPanel application={row} profiles={profiles} year={year} />
+        <Review kind="carver" id={row.id} status={row.status} notes={row.admin_notes} />
+      </div>
     </div>
   );
 }

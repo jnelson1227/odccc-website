@@ -114,6 +114,7 @@ function carverRows(rows: CarverApplication[]) {
       "Selling Payment",
       "Selling Check #",
       "Selling Signed By",
+      "Accepted On",
       "Committee Notes",
     ],
     body: rows.map((r) => [
@@ -145,6 +146,7 @@ function carverRows(rows: CarverApplication[]) {
       r.selling_payment_method ? paymentMethodLabel(r.selling_payment_method) : "",
       r.selling_check_number ?? "",
       r.selling_signature_name ?? "",
+      r.accepted_at ? r.accepted_at.slice(0, 10) : "",
       r.admin_notes ?? "",
     ]),
   };

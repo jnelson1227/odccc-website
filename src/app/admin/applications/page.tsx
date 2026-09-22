@@ -1,7 +1,7 @@
 import AdminShell from "@/components/admin/AdminShell";
 import { requireAdmin } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
-import type { CarverApplication, Settings, VendorApplication } from "@/lib/types";
+import type { Carver, CarverApplication, Settings, VendorApplication } from "@/lib/types";
 import ApplicationsManager from "./ApplicationsManager";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +21,7 @@ export default async function ApplicationsAdminPage({
   const { type } = await searchParams;
   const kind = type === "vendor" ? "vendor" : "carver";
 
-  const [settingsRes, carversRes, vendorsRes] = await Promise.all([
+  const [settingsRes, carversRes, vendorsRes, profilesRes] = await Promise.all([
     supabase.from("settings").select("*").eq("id", 1).single(),
     supabase
       .from("carver_applications")
@@ -31,6 +31,8 @@ export default async function ApplicationsAdminPage({
       .from("vendor_applications")
       .select("*")
       .order("created_at", { ascending: false }),
+    // Every carver profile, for matching applications against the roster.
+    supabase.from("carvers").select("*").order("name"),
   ]);
 
   const settings = settingsRes.data as Settings;
@@ -46,6 +48,7 @@ export default async function ApplicationsAdminPage({
         }}
         carvers={(carversRes.data ?? []) as CarverApplication[]}
         vendors={(vendorsRes.data ?? []) as VendorApplication[]}
+        profiles={(profilesRes.data ?? []) as Carver[]}
       />
     </AdminShell>
   );

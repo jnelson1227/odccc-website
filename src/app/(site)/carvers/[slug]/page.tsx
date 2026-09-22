@@ -53,9 +53,10 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
   // Show each photo the shape it was taken — a sculpture shot wide shouldn't be
   // cropped into a portrait frame. 3:4 is only the fallback for a photo whose
   // size we couldn't read.
-  const [portraitSize, sculptureSize] = await Promise.all([
+  const [portraitSize, sculptureSize, gallerySizes] = await Promise.all([
     imageDimensions(portrait),
     imageDimensions(sculpture),
+    Promise.all((carver.gallery ?? []).map((item) => imageDimensions(imageUrl(item.path)))),
   ]);
   const ratio = (size: { width: number; height: number } | null) =>
     size ? `${size.width} / ${size.height}` : "3 / 4";
@@ -222,6 +223,34 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
             )}
           </div>
         </article>
+
+        {carver.gallery && carver.gallery.length > 0 && (
+          <section aria-labelledby="more-work" className="mt-16 flex flex-col gap-6 border-t border-line pt-12">
+            <div className="flex flex-col gap-2">
+              <div className="eyebrow">Portfolio</div>
+              <h2 id="more-work" className="display m-0 text-(length:--text-section-h2) font-black leading-[0.9]">
+                More of {carver.name.split(" ")[0]}&apos;s work
+              </h2>
+            </div>
+            <ul className="m-0 grid list-none grid-cols-1 gap-6 p-0 sm:grid-cols-2 lg:grid-cols-3">
+              {carver.gallery.map((item, i) => {
+                const src = imageUrl(item.path);
+                if (!src) return null;
+                return (
+                  <li key={item.path} className="relative w-full" style={{ aspectRatio: ratio(gallerySizes[i]) }}>
+                    <Image
+                      src={src}
+                      alt={item.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="border-2 border-line object-cover"
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        )}
       </main>
 
       <NewsletterBand source={`/carvers/${carver.slug}`} />
