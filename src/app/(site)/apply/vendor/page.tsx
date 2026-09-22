@@ -55,22 +55,27 @@ export default async function VendorApplicationPage() {
               </p>
             )}
 
-            <div className="grid grid-cols-1 gap-12 px-6 py-12 md:px-16 md:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
-              <VendorApplicationForm
-                year={year}
-                rates={settings}
-                contactEmail={settings.contact_email}
-              />
+            <section
+              aria-labelledby="before-you-apply"
+              className="flex flex-col gap-6 px-6 pt-12 md:px-16 md:pt-16"
+            >
+              <div className="flex flex-col gap-2">
+                <div className="eyebrow">Read this first</div>
+                <h2 id="before-you-apply" className="display m-0 text-(length:--text-band-h2) font-black">
+                  Before you apply
+                </h2>
+              </div>
 
-              <aside className="flex flex-col gap-6 lg:sticky lg:top-[120px] lg:self-start">
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <InfoPanel title="Fee schedule">
                   <Rate label="Food, wine or beer" value={money(settings.vendor_fee_food)} member={money(settings.vendor_fee_food_member)} />
                   <Rate label="All other vendors" value={money(settings.vendor_fee_other)} member={money(settings.vendor_fee_other_member)} />
                   <Rate label="Each additional space" value={money(settings.vendor_fee_additional_space)} />
                   <Rate label="Electrical, per space" value={money(settings.vendor_fee_electrical)} note="Food vendors only" />
-                  <p className="m-0 pt-1 text-sub">
-                    Booths are 10&apos; x 12&apos; with a 10-foot selling front. Chamber members pay
-                    the lower rate.
+                  <p className="m-0 border-t border-line pt-3 text-[16px] text-sub">
+                    Booths are 10&apos; x 12&apos; with a 10-foot selling front. Chamber members pay the
+                    lower rate. Each space comes with two all-event wristbands; extras are $10 per
+                    person per day or $30 for the whole event.
                   </p>
                 </InfoPanel>
 
@@ -81,14 +86,16 @@ export default async function VendorApplicationPage() {
                   </p>
                   <p className="m-0">
                     <strong className="text-cream">Set-up:</strong> {setupLabel}, 2 p.m. to 7 p.m.
+                    Assigned space numbers are given out at check-in, not before.
                   </p>
                   <p className="m-0">
                     <strong className="text-cream">Location:</strong> 313 Rainbow Plaza, Reedsport,
                     Oregon — the gravel lot beside the post office.
                   </p>
                   <p className="m-0">
-                    Booths open by 9 a.m. daily and stay open until the ticket booth closes. No
-                    vehicles in the event space after 8 a.m.
+                    <strong className="text-cream">Hours:</strong> open by 9 a.m. daily and stay open
+                    until the ticket booth closes. No vehicles in the event space after 8 a.m., and no
+                    camping in the vendor area without arranging it with the Chamber.
                   </p>
                 </InfoPanel>
 
@@ -99,23 +106,49 @@ export default async function VendorApplicationPage() {
                     Chamber and the City of Reedsport as additional insured.
                   </p>
                   <p className="m-0">
-                    Send the certificate with your application rather than bringing it with you —
-                    that leaves time to correct mistakes. Without a correct certificate you
-                    can&apos;t set up, and there&apos;s no refund.
+                    Have your agent send the certificate now rather than bringing it with you — that
+                    leaves time to correct mistakes. Without a correct certificate you can&apos;t set
+                    up, and there&apos;s no refund.
                   </p>
                 </InfoPanel>
 
-                <InfoPanel title="Selling carvings?">
+                <InfoPanel title="How it works">
                   <p className="m-0">
-                    Competing carvers who only want to sell their own carvings should use the{" "}
+                    Your space is reserved once the application and{" "}
+                    <strong className="text-cream">full payment</strong> are in and the Chainsaw
+                    Committee has approved it. Pay by check or money order to the Chamber, or call
+                    541-271-3495 to pay by card (3% fee). There are no refunds.
+                  </p>
+                  <p className="m-0">
+                    Only the items you list may be sold. Competing carvers who just want to sell their
+                    own carvings should use the{" "}
                     <Link href="/apply/carver" className="font-bold text-gold">
                       carver application
                     </Link>{" "}
-                    instead — it has a cheaper selling space near your carving booth.
+                    instead — it has a cheaper selling space beside the carving booth.
                   </p>
                 </InfoPanel>
-              </aside>
-            </div>
+              </div>
+            </section>
+
+            <section
+              aria-labelledby="the-application"
+              className="flex flex-col gap-8 px-6 py-12 md:px-16 md:py-16"
+            >
+              <div className="flex flex-col gap-2">
+                <div className="eyebrow">{year} championship</div>
+                <h2 id="the-application" className="display m-0 text-(length:--text-band-h2) font-black">
+                  The application
+                </h2>
+              </div>
+              <div className="max-w-[900px]">
+                <VendorApplicationForm
+                  year={year}
+                  rates={settings}
+                  contactEmail={settings.contact_email}
+                />
+              </div>
+            </section>
           </>
         ) : (
           <section className="mx-6 mt-12 mb-4 flex flex-col items-start gap-6 border border-line bg-fir-850 px-6 py-10 md:mx-16 md:px-12 md:py-12">
@@ -159,11 +192,11 @@ function Rate({
     <p className="m-0 flex items-baseline justify-between gap-4">
       <span>
         {label}
-        {note && <span className="block text-[13px] text-sub">{note}</span>}
+        {note && <span className="block text-[14px] text-sub">{note}</span>}
       </span>
       <span className="shrink-0 text-right font-bold text-cream">
         {value}
-        {member && <span className="block text-[13px] font-normal text-sub">{member} members</span>}
+        {member && <span className="block text-[14px] font-normal text-sub">{member} Chamber members</span>}
       </span>
     </p>
   );

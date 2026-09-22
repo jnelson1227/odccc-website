@@ -59,52 +59,85 @@ export default async function CarverApplicationPage() {
               </p>
             )}
 
-            <div className="grid grid-cols-1 gap-12 px-6 py-12 md:px-16 md:py-16 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">
-              <CarverApplicationForm
-                year={year}
-                sellingSpaceFee={settings.carver_selling_space_fee}
-                contactEmail={settings.contact_email}
-              />
+            <section
+              aria-labelledby="before-you-apply"
+              className="flex flex-col gap-6 px-6 pt-12 md:px-16 md:pt-16"
+            >
+              <div className="flex flex-col gap-2">
+                <div className="eyebrow">Read this first</div>
+                <h2 id="before-you-apply" className="display m-0 text-(length:--text-band-h2) font-black">
+                  Before you apply
+                </h2>
+              </div>
 
-              <aside className="flex flex-col gap-6 lg:sticky lg:top-[120px] lg:self-start">
-                <InfoPanel title="Before you start">
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <InfoPanel title="What you'll need">
                   <p className="m-0">
-                    Have two or more photos of your work ready to upload — they&apos;re what the
-                    committee judges your application on.
+                    <strong className="text-cream">Two or more photos of your work</strong>, ready to
+                    upload from your phone or computer. They&apos;re what the committee judges your
+                    application on, so send your best pieces.
                   </p>
                   <p className="m-0">
                     A completed application is required every year, even for returning carvers.
+                    Selection isn&apos;t first come, first served — every application is reviewed
+                    against the others in the same division, and submitting one doesn&apos;t guarantee
+                    acceptance.
                   </p>
                   <p className="m-0">
-                    You pick your own division. The committee doesn&apos;t place carvers into
-                    divisions or move them once assigned.
+                    You pick your own division. There are 30 Professional and 10 Semi-Professional
+                    positions, and the committee doesn&apos;t place carvers into divisions or move them
+                    once assigned.
                   </p>
                 </InfoPanel>
 
-                <InfoPanel title="Good to know">
-                  <ul className="m-0 flex list-none flex-col gap-3 p-0">
-                    {FAQ.map((item) => (
-                      <li key={item} className="flex gap-3">
-                        <span aria-hidden="true" className="mt-[10px] h-[6px] w-[6px] shrink-0 bg-gold" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </InfoPanel>
-
-                <InfoPanel title="Selling carvings">
+                <InfoPanel title="Selling your carvings">
                   <p className="m-0">
-                    A dedicated selling space near your booth is{" "}
-                    {money(settings.carver_selling_space_fee)} for 10&apos; x 12&apos;, and it&apos;s
-                    for carvings only. To sell anything else you need the{" "}
+                    You may display a few pieces for sale in front of your carving booth at no charge,
+                    as long as they don&apos;t block walkways or create a tripping hazard.
+                  </p>
+                  <p className="m-0">
+                    If you want a dedicated selling space near your booth, it&apos;s{" "}
+                    <strong className="text-cream">{money(settings.carver_selling_space_fee)}</strong>{" "}
+                    for a 10&apos; x 12&apos; space, carvings only — you can add it at the end of this
+                    form. To sell anything else you need the{" "}
                     <Link href="/apply/vendor" className="font-bold text-gold">
                       regular vendor application
                     </Link>
                     .
                   </p>
                 </InfoPanel>
-              </aside>
-            </div>
+              </div>
+
+              <InfoPanel title="Good to know">
+                <ul className="m-0 grid list-none grid-cols-1 gap-x-10 gap-y-3 p-0 md:grid-cols-2">
+                  {FAQ.map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <span aria-hidden="true" className="mt-[12px] h-[6px] w-[6px] shrink-0 bg-gold" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </InfoPanel>
+            </section>
+
+            <section
+              aria-labelledby="the-application"
+              className="flex flex-col gap-8 px-6 py-12 md:px-16 md:py-16"
+            >
+              <div className="flex flex-col gap-2">
+                <div className="eyebrow">{year} championship</div>
+                <h2 id="the-application" className="display m-0 text-(length:--text-band-h2) font-black">
+                  The application
+                </h2>
+              </div>
+              <div className="max-w-[900px]">
+                <CarverApplicationForm
+                  year={year}
+                  sellingSpaceFee={settings.carver_selling_space_fee}
+                  contactEmail={settings.contact_email}
+                />
+              </div>
+            </section>
           </>
         ) : (
           <section className="mx-6 mt-12 mb-4 flex flex-col items-start gap-6 border border-line bg-fir-850 px-6 py-10 md:mx-16 md:px-12 md:py-12">

@@ -278,18 +278,24 @@ export function Honeypot() {
   );
 }
 
-/** A panel of read-only information lifted from the printed form. */
+/**
+ * A panel of read-only information lifted from the printed form. These sit
+ * above the application in full-width sections, so the type is sized for
+ * reading rather than for a sidebar.
+ */
 export function InfoPanel({
   title,
   children,
+  className = "",
 }: {
   title: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="flex flex-col gap-3 border border-line bg-fir-850 px-5 py-5 md:px-6">
-      <h3 className="display m-0 text-[20px] font-black text-cream">{title}</h3>
-      <div className="flex flex-col gap-2 text-[15px] leading-[1.6] text-body">{children}</div>
+    <div className={`flex flex-col gap-4 border border-line bg-fir-850 px-6 py-6 md:px-8 md:py-7 ${className}`}>
+      <h3 className="display m-0 text-[24px] font-black text-gold">{title}</h3>
+      <div className="flex flex-col gap-3 text-[17px] leading-[1.6] text-body">{children}</div>
     </div>
   );
 }
