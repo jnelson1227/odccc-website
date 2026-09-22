@@ -57,7 +57,7 @@ const AROUND_TOWN = [
   },
   {
     title: "Old Town Reedsport",
-    body: "A few walkable blocks: an art gallery carrying fifty-plus Oregon artists with a wine room in back, a brew pub, boutiques, a distillery and a bakery and a cafe worth the line.",
+    body: "A few walkable blocks: an art gallery carrying fifty-plus Oregon artists with a wine room, a brew pub, boutiques, a distillery, a cafe, and a bakery worth the line.",
   },
   {
     title: "Winchester Bay",
