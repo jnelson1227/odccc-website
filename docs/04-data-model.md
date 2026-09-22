@@ -12,6 +12,8 @@ Schema: `supabase/migrations/0001_init.sql`. Starter content: `supabase/seed.sql
 | `schedule_items` | Daily schedule rows for weekday (Thu–Sat) and Sunday |
 | `winners` | Past winners by year, division and place |
 | `subscribers` | Newsletter signups |
+| `carver_applications` | Online carver applications, field for field from the printed form; photos are Storage paths |
+| `vendor_applications` | Online vendor applications, with fee total, workers' comp answer and typed signature |
 | `media` | Uploaded image library |
 | `admins` | Email allowlist with roles |
 
@@ -33,7 +35,8 @@ Unit-test these: 2026 → June 18–21 (matches the 2026 event); 2027 → June 1
 
 ## Security notes
 - Public pages use the anon key (read-only by RLS).
-- Newsletter inserts: a server action with the **service role key** (server-only env var), after validation, a honeypot field, and a simple per-IP rate limit (e.g., Vercel KV or an in-memory map).
+- Application tables have **no public select policy** — they hold home addresses. Applicant photos go into `odccc-media` via a one-shot signed upload URL from a rate-limited server action; the submit action only accepts paths of the shape it handed out.
+- Newsletter and application inserts: a server action with the **service role key** (server-only env var), after validation, a honeypot field, and a simple per-IP rate limit (e.g., Vercel KV or an in-memory map).
 - `is_admin()` checks the JWT email against `admins`. Seeded owner: jill@highwater.cafe.
 - Storage bucket `media` is public-read and admin-write. Keep uploads under 5 MB; resize on upload where possible.
 

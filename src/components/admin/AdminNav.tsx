@@ -7,6 +7,7 @@ export const ADMIN_NAV = [
   { href: "/admin/event", label: "Event & homepage" },
   { href: "/admin/carvers", label: "Carvers" },
   { href: "/admin/sponsors", label: "Sponsors" },
+  { href: "/admin/applications", label: "Applications" },
   { href: "/admin/subscribers", label: "Subscribers" },
   { href: "/admin/schedule", label: "Schedule" },
   { href: "/admin/winners", label: "Past winners" },

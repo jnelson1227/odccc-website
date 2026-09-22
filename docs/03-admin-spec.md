@@ -8,7 +8,7 @@ Keep it much simpler than a full CMS: a handful of forms and tables for Chamber 
 - All writes go through server actions using the user's session. RLS enforces `is_admin()`.
 
 ## Layout
-Left sidebar (fir green): logo, "Site admin", nav — Event & homepage · Carvers · Sponsors · Subscribers · Schedule · Past winners · Photos · Admins; the signed-in user at the bottom. The top bar has the page title and "View site". Saving shows a toast ("Saved — live on the site") and triggers revalidation.
+Left sidebar (fir green): logo, "Site admin", nav — Event & homepage · Carvers · Sponsors · Applications · Subscribers · Schedule · Past winners · Photos · Admins; the signed-in user at the bottom. The top bar has the page title and "View site". Saving shows a toast ("Saved — live on the site") and triggers revalidation.
 
 ## Screens
 **Event & homepage** (`settings`, a single row)
@@ -28,6 +28,10 @@ Left sidebar (fir green): logo, "Site admin", nav — Event & homepage · Carver
 - Left: sponsorship levels (drag to reorder): name, price label (text, e.g. "$1,000+"), price amount (number, nullable), max available (nullable = open), show logo on the Sponsors page (bool), on the poster (bool), benefits (one per line). Upload/replace the sponsorship form PDF.
 - Right: sponsors for the selected year: logo (upload; hint "white or one-color logo for the dark site"), name, level, status (Pledged / Paid), website, in-kind note. "+ Add sponsor" and "Copy last year's sponsors as Pledged".
 - A notice when the Presenting level has no sponsor for the year.
+
+**Applications**
+- Carver / Vendor tabs with a "new" count, stats for the year, search, status and year filters, **Export CSV** (columns named to match the Chamber's Airtable carver table; photos excluded). Click a row for the whole application, the uploaded photos, a status select (New · Reviewed · Accepted · Waitlisted · Declined), committee notes and delete.
+- Whether each form is open, the deadline text and the fee schedule are set on Event & homepage → Applications. Closed forms show a "not open yet" note on the site.
 
 **Subscribers**
 - Counts (total, last 30 days, unsubscribed), search, status filter, table (first name, email, source page, date, status), **Export CSV**. Unsubscribe/delete per row.

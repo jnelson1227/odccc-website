@@ -14,8 +14,20 @@ import {
   type ActionState,
 } from "./shared";
 
+const FEE_KEYS = [
+  "carver_selling_space_fee",
+  "vendor_fee_food",
+  "vendor_fee_food_member",
+  "vendor_fee_other",
+  "vendor_fee_other_member",
+  "vendor_fee_additional_space",
+  "vendor_fee_electrical",
+] as const;
+
 const PUBLIC_PATHS = [
   "/",
+  "/apply/carver",
+  "/apply/vendor",
   "/carvers",
   "/schedule",
   "/visit",
@@ -74,9 +86,23 @@ export async function saveSettings(
     return failed("The ticket link needs to start with http:// or https://");
   }
 
+  // Fees are whole dollars; a blank or nonsense entry keeps the current value
+  // rather than silently charging nothing.
+  const fees: Record<string, number> = {};
+  for (const key of FEE_KEYS) {
+    const value = int(form, key);
+    if (value === null) continue;
+    if (value < 0 || value > 10_000) return failed("Fees need to be between $0 and $10,000.");
+    fees[key] = value;
+  }
+
   const { error } = await supabase
     .from("settings")
     .update({
+      ...fees,
+      carver_applications_open: bool(form, "carver_applications_open"),
+      vendor_applications_open: bool(form, "vendor_applications_open"),
+      application_deadline: text(form, "application_deadline"),
       event_year: year,
       date_override_start: start,
       date_override_end: end,

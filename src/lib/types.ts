@@ -11,6 +11,11 @@ export type SubscriberStatus = "subscribed" | "unsubscribed";
 export type AdminRole = "owner" | "editor";
 export type DayType = "weekday" | "sunday";
 export type CarversPageMode = "current" | "previous";
+export type ApplicationStatus = "New" | "Reviewed" | "Accepted" | "Waitlisted" | "Declined";
+export type BoothType = "Food" | "Craft" | "Collectible" | "Commercial" | "Non-Profit";
+export type ShirtSize = "Small" | "Med" | "Lrg" | "XL" | "2XL" | "3XL" | "4XL";
+export type QuickCarveComfort = "Very" | "Somewhat" | "Not at all";
+export type WorkersComp = "no-employees" | "has-employees";
 
 export type Settings = {
   id: number;
@@ -42,6 +47,19 @@ export type Settings = {
   sponsorship_form_path: string | null;
   stat_visitors: string | null;
   carvers_page_mode: CarversPageMode;
+  /** Applications are closed until the Chamber opens them in the admin. */
+  carver_applications_open: boolean;
+  vendor_applications_open: boolean;
+  /** Free text, e.g. "May 8, 2026". */
+  application_deadline: string | null;
+  /** Whole dollars. The 2026 fee schedule from the two application PDFs. */
+  carver_selling_space_fee: number;
+  vendor_fee_food: number;
+  vendor_fee_food_member: number;
+  vendor_fee_other: number;
+  vendor_fee_other_member: number;
+  vendor_fee_additional_space: number;
+  vendor_fee_electrical: number;
   updated_at: string;
 };
 
@@ -145,5 +163,74 @@ export type MediaItem = {
 export type Admin = {
   email: string;
   role: AdminRole;
+  created_at: string;
+};
+
+/**
+ * A carver's application to compete, following the Chamber's printed form.
+ * `photo_paths` are keys in the `odccc-media` bucket — the "at least two
+ * photos of your work" the form asks for.
+ */
+export type CarverApplication = {
+  id: string;
+  year: number;
+  first_name: string;
+  last_name: string;
+  street_address: string;
+  city: string;
+  state: string;
+  zip: string;
+  phone: string;
+  email: string;
+  text_ok: boolean;
+  division: Division;
+  shirt_size: ShirtSize;
+  quick_carve_comfort: QuickCarveComfort;
+  experience: string;
+  bio: string | null;
+  public_contact: string | null;
+  photo_paths: string[];
+  /** The optional 10'x12' space for selling finished carvings, carvings only. */
+  wants_selling_space: boolean;
+  selling_business_name: string | null;
+  selling_spaces: number | null;
+  selling_other_items: string | null;
+  selling_fee_total: number | null;
+  status: ApplicationStatus;
+  admin_notes: string | null;
+  created_at: string;
+};
+
+/** A vendor's application for booth space, following the Chamber's printed form. */
+export type VendorApplication = {
+  id: string;
+  year: number;
+  business_name: string;
+  first_name: string;
+  last_name: string;
+  street_address: string;
+  city: string;
+  state: string;
+  zip: string;
+  phone: string;
+  fax: string | null;
+  email: string;
+  website: string | null;
+  booth_type: BoothType;
+  chamber_member: boolean;
+  items_for_sale: string;
+  electrical: boolean;
+  electrical_needs: string | null;
+  spaces: number;
+  fee_total: number;
+  near_vendor: string | null;
+  workers_comp: WorkersComp;
+  agrees_terms: boolean;
+  agrees_code_of_conduct: boolean;
+  agrees_waiver: boolean;
+  signature_name: string;
+  signed_at: string;
+  status: ApplicationStatus;
+  admin_notes: string | null;
   created_at: string;
 };

@@ -4,6 +4,7 @@ import CarverCard from "@/components/site/CarverCard";
 import NewsletterBand from "@/components/site/NewsletterBand";
 import PageHeader from "@/components/site/PageHeader";
 import SiteNav from "@/components/site/SiteNav";
+import { applicationHref } from "@/lib/applications";
 import { capitalize, numberToWords } from "@/lib/dates";
 import { getEventContext, getLineup } from "@/lib/queries";
 import type { CarverWithStatus } from "@/lib/types";
@@ -47,7 +48,8 @@ export default async function CarversPage() {
   const { rangeLabel, passesHref, settings, year } = await getEventContext();
   const lineup = await getLineup();
   const all = [...lineup.pro, ...lineup.semiPro];
-  const carverApplication = settings.carver_application_url?.trim();
+  const carverApplication = applicationHref(settings, "carver");
+  const applicationsOpen = Boolean(settings.carver_application_url?.trim()) || settings.carver_applications_open;
 
   const intro =
     all.length > 0
@@ -98,12 +100,12 @@ export default async function CarversPage() {
               Are you a carver?
             </h2>
             <p className="m-0 text-[18px] text-body">
-              {carverApplication
+              {applicationsOpen
                 ? `Applications for the ${year} championship are open. Pro and Semi-Pro divisions.`
                 : `Applications for the ${year} championship open soon. Pro and Semi-Pro divisions.`}
             </p>
           </div>
-          {carverApplication ? (
+          {carverApplication.startsWith("http") ? (
             <a
               href={carverApplication}
               target="_blank"
@@ -113,12 +115,12 @@ export default async function CarversPage() {
               Apply to carve
             </a>
           ) : (
-            <a
-              href={`mailto:${settings.contact_email ?? ""}?subject=${encodeURIComponent(`${year} ODCCC carver application`)}`}
-              className="btn-outline flex min-h-11 items-center"
+            <Link
+              href={carverApplication}
+              className={`${applicationsOpen ? "btn-gold" : "btn-outline"} flex min-h-11 items-center`}
             >
-              Ask about applying
-            </a>
+              {applicationsOpen ? "Apply to carve" : "About applying"}
+            </Link>
           )}
         </section>
 

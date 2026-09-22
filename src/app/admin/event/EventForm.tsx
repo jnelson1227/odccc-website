@@ -4,7 +4,7 @@ import { useActionState, useState } from "react";
 import FeaturedCarverPicker from "@/components/admin/FeaturedCarverPicker";
 import ImageUpload from "@/components/admin/ImageUpload";
 import SaveBar from "@/components/admin/SaveBar";
-import { Card, Field, Locked, inputClass, textareaClass } from "@/components/admin/ui";
+import { Card, Checkbox, Field, Locked, inputClass, textareaClass } from "@/components/admin/ui";
 import { editionLabel, eventDates, formatRangeLong, toISODate } from "@/lib/dates";
 import { IDLE } from "@/lib/actions/state";
 import { saveSettings } from "@/lib/actions/settings";
@@ -326,26 +326,6 @@ export default function EventForm({
                   className={inputClass}
                 />
               </Field>
-              <Field label="Carver application link" htmlFor="carver_application_url">
-                <input
-                  id="carver_application_url"
-                  name="carver_application_url"
-                  type="url"
-                  placeholder="https://"
-                  defaultValue={settings.carver_application_url ?? ""}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label="Vendor application link" htmlFor="vendor_application_url">
-                <input
-                  id="vendor_application_url"
-                  name="vendor_application_url"
-                  type="url"
-                  placeholder="https://"
-                  defaultValue={settings.vendor_application_url ?? ""}
-                  className={inputClass}
-                />
-              </Field>
             </div>
 
             <Field
@@ -370,6 +350,94 @@ export default function EventForm({
 
         {/* ---------------------------------------------- right column */}
         <div className="flex flex-col gap-5">
+          <Card
+            title="Applications"
+            hint="The carver and vendor forms live on the site at /apply/carver and /apply/vendor. Open them here when the committee is ready."
+          >
+            <div id="applications" className="flex flex-col gap-2">
+              <Checkbox
+                id="carver_applications_open"
+                name="carver_applications_open"
+                defaultChecked={settings.carver_applications_open}
+                label="Carver applications are open"
+                hint="Off: the page says applications open soon and offers an email link."
+              />
+              <Checkbox
+                id="vendor_applications_open"
+                name="vendor_applications_open"
+                defaultChecked={settings.vendor_applications_open}
+                label="Vendor applications are open"
+              />
+            </div>
+
+            <Field
+              label="Application deadline"
+              htmlFor="application_deadline"
+              hint="Plain words, shown on both forms. Leave blank to show no deadline."
+            >
+              <input
+                id="application_deadline"
+                name="application_deadline"
+                type="text"
+                placeholder={`May 8, ${year}`}
+                defaultValue={settings.application_deadline ?? ""}
+                className={inputClass}
+              />
+            </Field>
+
+            <fieldset className="m-0 flex flex-col gap-3 border-0 p-0">
+              <legend className="mb-2 p-0 text-[13px] font-semibold">
+                Vendor fees (whole dollars)
+              </legend>
+              <div className="grid grid-cols-2 gap-3">
+                <Fee id="vendor_fee_food" label="Food / wine / beer" value={settings.vendor_fee_food} />
+                <Fee id="vendor_fee_food_member" label="… Chamber member" value={settings.vendor_fee_food_member} />
+                <Fee id="vendor_fee_other" label="All other vendors" value={settings.vendor_fee_other} />
+                <Fee id="vendor_fee_other_member" label="… Chamber member" value={settings.vendor_fee_other_member} />
+                <Fee id="vendor_fee_additional_space" label="Each extra space" value={settings.vendor_fee_additional_space} />
+                <Fee id="vendor_fee_electrical" label="Electrical, per space" value={settings.vendor_fee_electrical} />
+              </div>
+            </fieldset>
+
+            <Fee
+              id="carver_selling_space_fee"
+              label="Carver selling space, per 10' x 12'"
+              value={settings.carver_selling_space_fee}
+            />
+
+            <details className="text-[13px]">
+              <summary className="min-h-11 cursor-pointer py-3 font-semibold">
+                Use an outside form instead
+              </summary>
+              <div className="flex flex-col gap-3 pt-2">
+                <span className="text-admin-muted">
+                  If the Chamber ever moves applications to another service, paste its link here and
+                  every &ldquo;apply&rdquo; button on the site goes there instead of the built-in form.
+                </span>
+                <Field label="Carver application link" htmlFor="carver_application_url">
+                  <input
+                    id="carver_application_url"
+                    name="carver_application_url"
+                    type="url"
+                    placeholder="https://"
+                    defaultValue={settings.carver_application_url ?? ""}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Vendor application link" htmlFor="vendor_application_url">
+                  <input
+                    id="vendor_application_url"
+                    name="vendor_application_url"
+                    type="url"
+                    placeholder="https://"
+                    defaultValue={settings.vendor_application_url ?? ""}
+                    className={inputClass}
+                  />
+                </Field>
+              </div>
+            </details>
+          </Card>
+
           <Card title="Presenting sponsor" hint="Appears under the championship logo.">
             <label
               htmlFor="presenting_enabled"
@@ -430,5 +498,29 @@ export default function EventForm({
         <SaveBar state={state} />
       </Card>
     </form>
+  );
+}
+
+/** A whole-dollar fee. The $ is decoration; the field holds just the number. */
+function Fee({ id, label, value }: { id: string; label: string; value: number }) {
+  return (
+    <Field label={label} htmlFor={id}>
+      <div className="relative">
+        <span aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 text-[15px] text-admin-muted">
+          $
+        </span>
+        <input
+          id={id}
+          name={id}
+          type="number"
+          min={0}
+          max={10000}
+          step={1}
+          inputMode="numeric"
+          defaultValue={value}
+          className={`${inputClass} pl-7`}
+        />
+      </div>
+    </Field>
   );
 }

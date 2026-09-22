@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { applicationHref } from "@/lib/applications";
 import type { Settings } from "@/lib/types";
 
-/** Contact details and application links all come from settings. */
+/**
+ * Contact details come from settings. The application links point at the
+ * site's own forms unless the Chamber has pasted an outside link into settings.
+ */
 export default function Footer({ settings }: { settings: Settings }) {
-  const carverApplication = settings.carver_application_url?.trim();
-  const vendorApplication = settings.vendor_application_url?.trim();
+  const carverApplication = applicationHref(settings, "carver");
+  const vendorApplication = applicationHref(settings, "vendor");
 
   return (
     <footer
@@ -36,16 +40,8 @@ export default function Footer({ settings }: { settings: Settings }) {
         <FooterLink href="/visit">Plan your visit</FooterLink>
         <FooterLink href="/sponsors">Our sponsors</FooterLink>
         <FooterLink href="/sponsorship">Become a sponsor</FooterLink>
-        {vendorApplication ? (
-          <FooterLink href={vendorApplication}>Vendor application</FooterLink>
-        ) : (
-          <Pending>Vendor application</Pending>
-        )}
-        {carverApplication ? (
-          <FooterLink href={carverApplication}>Carver application</FooterLink>
-        ) : (
-          <Pending>Carver application</Pending>
-        )}
+        <FooterLink href={vendorApplication}>Vendor application</FooterLink>
+        <FooterLink href={carverApplication}>Carver application</FooterLink>
       </FooterColumn>
 
       <FooterColumn title="Contact">
@@ -106,14 +102,5 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
     <Link href={href} className={className}>
       {children}
     </Link>
-  );
-}
-
-/** A link the Chamber hasn't supplied yet — shown, but honestly. */
-function Pending({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="flex min-h-11 items-center text-sub">
-      {children} <span className="ml-2 text-[12px] uppercase tracking-[1px]">— coming soon</span>
-    </span>
   );
 }
