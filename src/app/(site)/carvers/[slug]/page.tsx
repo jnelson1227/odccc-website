@@ -49,7 +49,6 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
 
   const portrait = imageUrl(carver.portrait_path);
   const sculpture = imageUrl(carver.photo_path);
-  const thisYear = carver.years.find((y) => y.year === ctx.year);
 
   // Show each photo the shape it was taken — a sculpture shot wide shouldn't be
   // cropped into a portrait frame. 3:4 is only the fallback for a photo whose
@@ -133,10 +132,10 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <div className="eyebrow">
-                {carver.division} division
-                {thisYear ? ` · ${ctx.year} ${thisYear.status.toLowerCase()}` : ""}
-              </div>
+              {/* Division only. Every carver holds an "Invited" row for the
+                  coming year as a placeholder, so printing that status here
+                  announced a lineup that /carvers says isn't announced yet. */}
+              <div className="eyebrow">{carver.division} division</div>
               <h1 className="display m-0 text-(length:--text-page-h1) font-black leading-[0.85]">
                 {carver.name}
               </h1>
