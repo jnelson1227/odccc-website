@@ -194,6 +194,7 @@ export type CarverApplication = {
   website: string | null;
   facebook: string | null;
   instagram: string | null;
+  tiktok: string | null;
   photo_paths: string[];
   /** The optional 10'x12' space for selling finished carvings, carvings only. */
   wants_selling_space: boolean;

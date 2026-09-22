@@ -300,6 +300,7 @@ export async function applyAsCarver(
     website: link(form, "website"),
     facebook: social(form, "facebook"),
     instagram: social(form, "instagram"),
+    tiktok: social(form, "tiktok"),
     photo_paths: photos,
     wants_selling_space: wantsSelling,
     selling_business_name: wantsSelling ? optional(form, "selling_business_name", 150) : null,

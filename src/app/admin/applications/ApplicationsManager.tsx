@@ -380,6 +380,7 @@ function CarverDetail({ row }: { row: CarverApplication }) {
           </Detail>
           <SocialDetail platform="facebook" value={row.facebook} />
           <SocialDetail platform="instagram" value={row.instagram} />
+          <SocialDetail platform="tiktok" value={row.tiktok} />
         </Section>
 
         {row.wants_selling_space && (

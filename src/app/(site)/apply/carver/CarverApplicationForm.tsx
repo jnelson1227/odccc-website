@@ -147,7 +147,7 @@ export default function CarverApplicationForm({
           Where should people find you? Only what you want the public to see — these go on your
           page on this site if you&apos;re selected.
         </p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <TextField
             name="website"
             label="Website"
@@ -167,6 +167,13 @@ export default function CarverApplicationForm({
           <TextField
             name="instagram"
             label="Instagram"
+            maxLength={300}
+            placeholder="@yourhandle"
+            hint="Your handle or the link to your profile."
+          />
+          <TextField
+            name="tiktok"
+            label="TikTok"
             maxLength={300}
             placeholder="@yourhandle"
             hint="Your handle or the link to your profile."
