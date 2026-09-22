@@ -16,3 +16,10 @@ next-env.d.ts
 # 100MB — so never let `git add -A` sweep them into a commit.
 /Final Carvings Chainsaw 2026/
 /Social Sharing Chainsaw 2026/
+
+# Carver roster exports. These carry phone numbers, emails and mailing
+# addresses for every carver — only the bios and links belong on the site,
+# and none of this belongs in a public repo.
+/2026 CARVERS-Grid view.xlsx
+/2026 CARVERS-Grid view.csv
+/~$*.xlsx

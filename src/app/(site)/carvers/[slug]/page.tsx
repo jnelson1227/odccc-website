@@ -7,6 +7,7 @@ import SiteNav from "@/components/site/SiteNav";
 import { imageUrl, initials } from "@/lib/images";
 import { ordinal } from "@/lib/dates";
 import { getAllCarverSlugs, getCarverBySlug, getEventContext } from "@/lib/queries";
+import { SOCIAL_LABEL, socialLabel, socialUrl, type Social } from "@/lib/social";
 
 export async function generateStaticParams() {
   const slugs = await getAllCarverSlugs();
@@ -37,6 +38,8 @@ export async function generateMetadata({
     },
   };
 }
+
+const SOCIALS: Social[] = ["facebook", "instagram", "tiktok"];
 
 export default async function CarverPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -134,6 +137,27 @@ export default async function CarverPage({ params }: { params: Promise<{ slug: s
                   </a>
                 </Detail>
               )}
+              {SOCIALS.map((platform) => {
+                const value = carver[platform];
+                if (!value) return null;
+                const href = socialUrl(platform, value);
+                return (
+                  <Detail key={platform} label={SOCIAL_LABEL[platform]}>
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="break-all text-gold no-underline hover:underline"
+                      >
+                        {socialLabel(value)}
+                      </a>
+                    ) : (
+                      socialLabel(value)
+                    )}
+                  </Detail>
+                );
+              })}
               {appearances.length > 0 && (
                 <Detail label="At the championship">
                   {appearances.length === 1

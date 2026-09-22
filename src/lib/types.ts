@@ -54,6 +54,9 @@ export type Carver = {
   division: Division;
   studio: string | null;
   website: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  tiktok: string | null;
   card_line: string | null;
   bio: string | null;
   honor_badge: string | null;

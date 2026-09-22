@@ -27,6 +27,9 @@ export type CarverRow = {
   division: Division;
   studio: string | null;
   website: string | null;
+  facebook: string | null;
+  instagram: string | null;
+  tiktok: string | null;
   card_line: string | null;
   bio: string | null;
   honor_badge: string | null;
@@ -308,6 +311,43 @@ function CarverEditor({
             className={inputClass}
           />
         </Field>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <Field
+            label="Facebook"
+            htmlFor="carver-facebook"
+            hint="Paste the full page link to make it clickable"
+          >
+            <input
+              id="carver-facebook"
+              name="facebook"
+              type="text"
+              placeholder="Page name or link"
+              defaultValue={carver?.facebook ?? ""}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Instagram" htmlFor="carver-instagram" hint="Handle, e.g. @carver">
+            <input
+              id="carver-instagram"
+              name="instagram"
+              type="text"
+              placeholder="@handle"
+              defaultValue={carver?.instagram ?? ""}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="TikTok" htmlFor="carver-tiktok" hint="Handle, e.g. @carver">
+            <input
+              id="carver-tiktok"
+              name="tiktok"
+              type="text"
+              placeholder="@handle"
+              defaultValue={carver?.tiktok ?? ""}
+              className={inputClass}
+            />
+          </Field>
+        </div>
 
         <Field
           label="Card line (short)"
