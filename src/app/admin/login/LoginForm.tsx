@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { createClient } from "@/lib/supabase/browser";
+import { createClient, createLinkClient } from "@/lib/supabase/browser";
 
 type Mode = "password" | "link";
 type State = { kind: "idle" | "working" | "sent" | "error"; message?: string };
@@ -22,7 +22,7 @@ export default function LoginForm() {
     const supabase = createClient();
 
     if (mode === "link") {
-      const { error } = await supabase.auth.signInWithOtp({
+      const { error } = await createLinkClient().auth.signInWithOtp({
         email: email.trim().toLowerCase(),
         options: { emailRedirectTo: `${window.location.origin}/admin/auth/callback` },
       });
@@ -59,8 +59,8 @@ export default function LoginForm() {
   if (state.kind === "sent") {
     return (
       <p role="status" className="m-0 text-[15px] leading-[1.6]">
-        <strong>Check your email.</strong> Open the link in this same browser, and don&apos;t
-        ask for a second one first — that cancels the first.
+        <strong>Check your email.</strong> Open the newest link you get. It works on this device
+        or your phone.
       </p>
     );
   }

@@ -23,8 +23,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${origin}/admin/login?error=${reason}`);
   }
 
+  // Links sent since 2026-09-24 use the implicit flow: the session arrives in
+  // the URL fragment, which never reaches the server. Browsers carry a fragment
+  // across a redirect, so hand off to a page that can read it. This URL stays
+  // the landing point because it's the one on Supabase's redirect allowlist.
   if (!code) {
-    return NextResponse.redirect(`${origin}/admin/login?error=missing-code`);
+    return NextResponse.redirect(`${origin}/admin/auth/finish`);
   }
 
   const supabase = await createClient();
