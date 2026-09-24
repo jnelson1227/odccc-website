@@ -36,7 +36,9 @@ export async function requireAdmin(): Promise<SignedInAdmin> {
     .maybeSingle();
 
   if (!admin) {
-    await supabase.auth.signOut();
+    // Local only. This person may be a legitimate Visit Reedsport user, and a
+    // global sign-out would end their session in that app as well.
+    await supabase.auth.signOut({ scope: "local" });
     redirect(`/admin/login?denied=${encodeURIComponent(user.email)}`);
   }
 

@@ -102,7 +102,7 @@ export async function setAdminPassword(
   _prev: ActionState,
   form: FormData,
 ): Promise<ActionState> {
-  await requireOwner();
+  const me = await requireOwner();
 
   const email = text(form, "email")?.toLowerCase();
   if (!email) return failed("Which admin?");
@@ -111,6 +111,16 @@ export async function setAdminPassword(
   if (isState(parsed)) return parsed;
 
   const supabase = await createClient();
+
+  // An owner setting their own password from this screen. Setting a password
+  // through the admin API ends every session that user has, including the one
+  // making the request, which signed the owner out mid-save. updateUser keeps
+  // the current session.
+  if (email === me.email.toLowerCase()) {
+    const { error } = await supabase.auth.updateUser({ password: parsed.password });
+    if (error) return failed(error.message);
+    return { status: "success", message: "Password saved. Use it next time you sign in." };
+  }
   const { data: admin } = await supabase
     .from("admins")
     .select("email")
@@ -138,6 +148,6 @@ export async function setAdminPassword(
 
   return {
     status: "success",
-    message: `Password set for ${email}. Give it to them directly, not by email.`,
+    message: `Password set for ${email}. Give it to them directly, not by email. It's also their Visit Reedsport password now, and they've been signed out of both.`,
   };
 }

@@ -13,7 +13,7 @@ export default function AccountForm({ email }: { email: string }) {
     <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[480px_1fr]">
       <Card
         title="Your password"
-        hint="Signing in with a password avoids the emailed link entirely."
+        hint="Signing in with a password avoids the emailed link entirely. This site shares logins with the Visit Reedsport app, so this is your password there too."
       >
         <form action={action} className="flex flex-col gap-4">
           <Field label="Email" htmlFor="account-email">

@@ -14,7 +14,10 @@ export default function SignOutButton() {
       disabled={busy}
       onClick={async () => {
         setBusy(true);
-        await createClient().auth.signOut();
+        // "local", not the default "global": the auth pool is shared with the
+        // Visit Reedsport app, and a global sign-out here would end the same
+        // person's sessions there, and on every other device, too.
+        await createClient().auth.signOut({ scope: "local" });
         router.replace("/admin/login");
         router.refresh();
       }}
